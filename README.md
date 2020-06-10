@@ -3,7 +3,7 @@ Downloading available datasets from an official open data source of Uzbekistan
 
 Import data from an official open data source of Uzbekistan: https://data.gov.uz
 
-The package provides several functions to easily find and download datasets and related information right from the R interface without bothering with other software. 
+The R package provides several functions to find and download datasets (and related information) right from the R interface. 
 The package is provided under the GPL-3 license.
 
 The package has three key functions:
@@ -15,4 +15,4 @@ The package has three key functions:
 **getData_dictionary(dataset_id)** - Downloads a dataset dictionary (variables) for the datasets
 
 <br><br>
-Feel free to raise trouble tickets on: https://github.com/alishersuyunov/opendatauzb/issues
+If you have any suggestions to be included in further releases or notice any bugs in the package, please feel free to raise trouble tickets on: https://github.com/alishersuyunov/opendatauzb/issues
