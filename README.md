@@ -6,7 +6,7 @@ Import data from an official open data source of Uzbekistan: https://data.gov.uz
 The package provides several functions to easily find and download datasets and related information right from the R interface without bothering with other software. 
 The package is provided under the GPL-3 license.
 
-**availableDatasets()** - the data frame with the list of of available datasets on data.gov.uz and corresponding dataset_id
+**availableDatasets()** - the data frame with the list of of available datasets on https://data.gov.uz and corresponding **dataset_id**
 
 **getData(dataset_id)** - Downloads available dataset with dataset_id
 
