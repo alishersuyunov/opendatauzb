@@ -1,0 +1,22 @@
+Package: opendatauzb
+Type: Package
+Title: Downloading available datasets from an official open data source of Uzbekistan
+Version: 0.1.0
+Authors@R: person("Alisher", "Suyunov", email = "alisher.c@yandex.com",
+                  role = c("aut", "cre"))
+Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz}
+  The package provides several functions to easily find and download datasets and related information right from the R interface without bothering with other software. 
+License: GPL-3
+Encoding: UTF-8
+Imports:
+    dplyr,
+    glue,
+    jsonlite,
+    httr,
+    assertive,
+    stringr,
+    utils
+URL: https://github.com/alishersuyunov/opendatauzb
+BugReports: https://github.com/alishersuyunov/opendatauzb/issues
+LazyData: false
+RoxygenNote: 7.1.0
