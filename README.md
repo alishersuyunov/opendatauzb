@@ -8,11 +8,11 @@ The package is provided under the GPL-3 license.
 
 The package has three key functions:
 
-**availableDatasets()** - the data frame with the list of of available datasets on https://data.gov.uz and corresponding **dataset_id**
+**availableDatasets()** - it returns a data frame with the list of available datasets on https://data.gov.uz with corresponding **dataset_id**
 
-**getData(dataset_id)** - Downloads available dataset with dataset_id
+**getData(dataset_id)** - Downloads a dataset with **dataset_id**
 
-**getData_dictionary(dataset_id)** - Downloads a dataset dictionary (variables) for the datasets
+**getData_dictionary(dataset_id)** - Downloads a data dictionary (variables) for the dataset
 
 <br><br>
 If you have any suggestions to be included in further releases or notice any bugs in the package, please feel free to raise trouble tickets on: https://github.com/alishersuyunov/opendatauzb/issues
