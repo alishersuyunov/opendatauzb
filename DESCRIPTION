@@ -19,4 +19,4 @@ Imports:
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
