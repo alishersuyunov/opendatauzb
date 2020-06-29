@@ -4,7 +4,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive
+#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2
 #' @return Returns a data frame
 #' @export
 #'

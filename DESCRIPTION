@@ -4,7 +4,7 @@ Title: Downloading available datasets from an official open data source of Uzbek
 Version: 0.1.1
 Authors@R: person("Alisher", "Suyunov", email = "alisher.c@yandex.com",
                   role = c("aut", "cre"))
-Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz}
+Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz} - and Uzbek Stock Market Data from \url{uzse.uz}
   The package provides several functions to easily find and download datasets and related information right from the R interface without bothering with other software. 
 License: GPL-3
 Encoding: UTF-8
@@ -19,7 +19,8 @@ Imports:
     readxl,
     rvest,
     lubridate,
-    tidyr
+    tidyr,
+    xml2
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
