@@ -1,7 +1,7 @@
 Package: opendatauzb
 Type: Package
-Title: Downloading available datasets from an official open data source of Uzbekistan
-Version: 0.1.0
+Title: Downloading available datasets from an official open data source of Uzbekistan and Uzbek Stock Market Data
+Version: 0.1.1
 Authors@R: person("Alisher", "Suyunov", email = "alisher.c@yandex.com",
                   role = c("aut", "cre"))
 Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz}
@@ -15,8 +15,12 @@ Imports:
     httr,
     assertive,
     stringr,
-    utils
+    utils,
+    readxl,
+    rvest,
+    lubridate,
+    tidyr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

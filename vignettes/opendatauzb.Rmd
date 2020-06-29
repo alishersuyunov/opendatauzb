@@ -1,0 +1,139 @@
+---
+title: "Introduction to Uzbek Stock Market Data with *opendatauzb* package"
+author: "Alisher Suyunov"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{"Introduction to Uzbek Stock Market Data"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(quantmod)
+library(tidyverse)
+library(PerformanceAnalytics)
+library(tidyquant)
+
+asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000", "UZ7025770007",
+                 "UZ7015030008", "UZ7043200003", "UZ703756K015", "UZ7037560008", "UZ7016400002",
+                 "UZ7004510002", "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
+                 "UZ7028090007", "UZ701134K017", "UZ7011340005", "UZ701655K011", "UZ7016550004")
+
+# for example it was 1
+assets <- asset_group %>%
+  lapply(getTicker) %>%
+  bind_rows()
+
+Ra <- assets %>%
+  group_by(symbol) %>%
+  tq_transmute(select     = "Closed Price",
+               mutate_fun = periodReturn,
+               period     = "monthly",
+               col_rename = "Ra")
+Ra
+
+# Baseline
+Rb <- getMarketIndex("all") %>%
+  tq_transmute(select     = price,
+               mutate_fun = periodReturn,
+               period     = "monthly",
+               col_rename = "Rb")
+Rb
+
+RaRb <- left_join(Ra, Rb, by = c("Date" = "date"))
+
+RaRb_capm <- RaRb %>%
+  tq_performance(Ra = Ra,
+                 Rb = Rb,
+                 Rf = 0.15,
+                 performance_fun = table.CAPM)
+RaRb_capm
+RaRb_capm %>% select(symbol, Alpha, Beta)
+
+
+RaRb %>%
+  tq_performance(
+    Ra = Ra,
+    Rb = Rb,
+    performance_fun = SharpeRatio
+  )
+
+wts <- c(rep(0.4/17, 5),
+         0.15,
+         rep(0.4/17, 3),
+         0.20,
+         rep(0.4/17, 4),
+         0.25,
+         rep(0.4/17, 5))
+
+# wts <- c(rep(1/8, 8))
+
+portfolio_growth_monthly <- Ra %>%
+  tq_portfolio(assets_col   = symbol,
+               returns_col  = Ra,
+               weights      = wts,
+               col_rename   = "investment.growth",
+               wealth.index = TRUE) %>%
+  mutate(investment.growth = investment.growth * 100000)
+
+portfolio_growth_monthly %>%
+  ggplot(aes(x = Date, y = investment.growth)) +
+  geom_line(size = 2, color = palette_light()[[1]]) +
+  labs(title = "Portfolio growth",
+       subtitle = "",
+       caption = "",
+       x = "", y = "Portfolio Value") +
+  geom_smooth(method = "loess") +
+  theme_tq() +
+  scale_color_tq() +
+  scale_y_continuous(labels = scales::label_number())
+```
+
+Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+
+- Never uses retina figures
+- Has a smaller default figure size
+- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+
+## Vignette Info
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+## Styles
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, fig.show='hold'}
+plot(1:10)
+plot(10:1)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))
