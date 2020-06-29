@@ -19,7 +19,8 @@ Imports:
     readxl,
     rvest,
     lubridate,
-    tidyr
+    tidyr,
+    xml2
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
