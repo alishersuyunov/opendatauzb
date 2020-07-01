@@ -25,12 +25,12 @@ In the latest version (0.1.1), several new functions have been added to collect 
 **RegisteredSecurities()**: returns a data frame with the list of securities from the Central Securities Depository (www.deponet.uz) database
 
 <br>
-For more information, please refer to vignette documentation with a few examples:
-```
+For more information, please refer to vignette documentation with a few examples:<br>
+```r
 browseVignettes("opendatauzb")
 vignette("opendatauzb", package = "opendatauzb")
 ```
-<br>
+<br><br>
 
 The package has also three key functions:
 
