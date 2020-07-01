@@ -1,0 +1,3963 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Alisher Suyunov" />
+
+<meta name="date" content="2020-07-01" />
+
+<title>Introduction to Uzbek Stock Market Data with opendatauzb package</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to Uzbek Stock Market Data with <em>opendatauzb</em> package</h1>
+<h4 class="author">Alisher Suyunov</h4>
+<h4 class="date">2020-07-01</h4>
+
+
+
+<p>This vignette provides an overview of a practical use of <strong>opendatauzb</strong> package’s functions to work with Uzbek Stock Market Data. Unlike stock markets in developed economies, there are few resources available in Uzbekistan that are machine-friendly and able to provide Uzbek stock market prices in machine-readable formats. With this R package, we overcome these data limitations and improve productivity of equity research analysts while evaluating Uzbek stocks.</p>
+<div id="available-securities-in-uzbek-stock-market" class="section level1">
+<h1>Available securities in Uzbek Stock Market</h1>
+<div id="registeredsecurities-download-a-full-list-of-registered-securities-with-isin-and-cfi-codes" class="section level2">
+<h2>RegisteredSecurities(): Download a full list of registered securities with ISIN and CFI codes</h2>
+<p><code>opendatauzb::RegisteredSecurities()</code> collects a list of securities from the <a href="www.deponet.uz">Central Securities Depository</a> database.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">RegisteredSecurities</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Эмитент
+</th>
+<th style="text-align:left;">
+Код ЦБ в ЦД
+</th>
+<th style="text-align:left;">
+ISIN
+</th>
+<th style="text-align:left;">
+CFI
+</th>
+<th style="text-align:left;">
+Дата формирования справочника
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+&quot; Andijon viloyati mashina-traktor parklari birlashmasi&quot; aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7046520001
+</td>
+<td style="text-align:left;">
+UZ0000000CY7
+</td>
+<td style="text-align:left;">
+ESXXXR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“1-Temir beton mahsulotlari zavodi” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7042380004
+</td>
+<td style="text-align:left;">
+UZ0000000CQ3
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“4-sonli Montaj Boshqarmasi” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ705326K015
+</td>
+<td style="text-align:left;">
+UZ0000000C74
+</td>
+<td style="text-align:left;">
+EPXXXR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“4-sonli Montaj Boshqarmasi” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7053260004
+</td>
+<td style="text-align:left;">
+UZ0000000C82
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Agregat zavodi” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7045360003
+</td>
+<td style="text-align:left;">
+UZ0000000FA0
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Agro invest sug’urta” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7055650004
+</td>
+<td style="text-align:left;">
+UZ0000000BY9
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Agrobank” aksiyadorlik tijorat banki
+</td>
+<td style="text-align:left;">
+UZ700156K011
+</td>
+<td style="text-align:left;">
+UZ00000004P2
+</td>
+<td style="text-align:left;">
+EPXXXR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Agrobank” aksiyadorlik tijorat banki
+</td>
+<td style="text-align:left;">
+UZ7001560000
+</td>
+<td style="text-align:left;">
+UZ00000004Q0
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Algoritm” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7043280005
+</td>
+<td style="text-align:left;">
+UZ00000001V6
+</td>
+<td style="text-align:left;">
+ESXXXR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+“Alliance-Leasing” aksiyadorlik jamiyati
+</td>
+<td style="text-align:left;">
+UZ7055590002
+</td>
+<td style="text-align:left;">
+UZ0000000BJ0
+</td>
+<td style="text-align:left;">
+ESXXFR
+</td>
+<td style="text-align:left;">
+30-06-2020
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="getsecurities-download-the-securities-listed-on-the-republican-stock-exchange-toshkent" class="section level2">
+<h2>getSecurities(): Download the securities listed on the Republican Stock Exchange “Toshkent”</h2>
+<p><code>opendatauzb::getSecurities()</code> provides a data frame with the list of securities from <a href="www.uzse.uz">the Republican Stock Exchange “Toshkent” database</a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">getSecurities</span>()</span></code></pre></div>
+<pre><code>## 5008 securities are found. Out of which are:</code></pre>
+<pre><code>## # A tibble: 4 x 2
+## # Groups:   Type [4]
+##   Type      n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 BND      11
+## 2 FCT     492
+## 3 RPO    4341
+## 4 STK     164</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+SecurityCode
+</th>
+<th style="text-align:left;">
+Ticker
+</th>
+<th style="text-align:left;">
+Issuer
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7053260004
+</td>
+<td style="text-align:left;">
+TSMB
+</td>
+<td style="text-align:left;">
+&lt;4-sonli Montaj Boshqarmasi&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ705326K015
+</td>
+<td style="text-align:left;">
+TSMB1
+</td>
+<td style="text-align:left;">
+&lt;4-sonli Montaj Boshqarmasi&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7045360003
+</td>
+<td style="text-align:left;">
+AGZD
+</td>
+<td style="text-align:left;">
+&lt;Agregat zavodi&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7001560000
+</td>
+<td style="text-align:left;">
+AGBA
+</td>
+<td style="text-align:left;">
+&lt;Agrobank&gt; aksiyadorlik tijorat banki
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ700156K011
+</td>
+<td style="text-align:left;">
+AGB1
+</td>
+<td style="text-align:left;">
+&lt;Agrobank&gt; aksiyadorlik tijorat banki
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7055590002
+</td>
+<td style="text-align:left;">
+ALLS
+</td>
+<td style="text-align:left;">
+&lt;Alliance-Leasing&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7045320007
+</td>
+<td style="text-align:left;">
+ALSM
+</td>
+<td style="text-align:left;">
+&lt;Alskom&gt; sug’urta kompaniyasi aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+ALS1
+</td>
+<td style="text-align:left;">
+&lt;Alskom&gt; sug’urta kompaniyasi aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7047650005
+</td>
+<td style="text-align:left;">
+ABKZ
+</td>
+<td style="text-align:left;">
+&lt;Andijon biokimyo zavodi&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+UZ7016530006
+</td>
+<td style="text-align:left;">
+ATSZ
+</td>
+<td style="text-align:left;">
+&lt;Andijon tajriba-sinov zavodi&gt; aksiyadorlik jamiyati
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ipo-obtain-schedule-of-public-offerings-ipospopo-the-government-shares" class="section level2">
+<h2>ipo(): Obtain schedule of public offerings (IPO/SPO/PO (the government shares))</h2>
+<p><code>opendatauzb::ipo()</code> returns a data frame with public offerings in last five years.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">ipo</span>()</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Code
+</th>
+<th style="text-align:left;">
+Title
+</th>
+<th style="text-align:left;">
+Отмена подписки
+</th>
+<th style="text-align:left;">
+Дата начала подписки
+</th>
+<th style="text-align:left;">
+Дата окончания подписки
+</th>
+<th style="text-align:right;">
+Этап подписки
+</th>
+<th style="text-align:left;">
+Валюта
+</th>
+<th style="text-align:left;">
+Цена предложения
+</th>
+<th style="text-align:left;">
+Депонирование (%)
+</th>
+<th style="text-align:left;">
+Объем выставленных на подписку (ед.)
+</th>
+<th style="text-align:left;">
+Объем выкупленных по подписке(ед.)
+</th>
+<th style="text-align:left;">
+Дата включения в биржевой котировальный лист
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+UZ7038450001
+</td>
+<td style="text-align:left;">
+UZPARTA’MINOT AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+15.06.2020
+</td>
+<td style="text-align:left;">
+15.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+35156,45
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+403 200
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+20.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+UZ7018260008
+</td>
+<td style="text-align:left;">
+Buxoroparranda AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+16.06.2020
+</td>
+<td style="text-align:left;">
+30.06.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+18391,69
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+459 630
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+03.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+UZ7018290005
+</td>
+<td style="text-align:left;">
+QO’QON YOG’-MOY AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+16.06.2020
+</td>
+<td style="text-align:left;">
+16.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+65811,28
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+710 170
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+21.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+UZ7026620003
+</td>
+<td style="text-align:left;">
+Farg’ona yog’-moy AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+18.06.2020
+</td>
+<td style="text-align:left;">
+17.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+40167,28
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+3 095 500
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+UZ702662K016
+</td>
+<td style="text-align:left;">
+Farg’ona yog’-moy AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+18.06.2020
+</td>
+<td style="text-align:left;">
+17.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+40167,28
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+1 504
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+UZ7029000005
+</td>
+<td style="text-align:left;">
+Qizilqumsement AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+18.06.2020
+</td>
+<td style="text-align:left;">
+17.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+4748,00
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+160 658 567
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+UZ7030550006
+</td>
+<td style="text-align:left;">
+Asaka yog’ AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+19.06.2020
+</td>
+<td style="text-align:left;">
+17.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+10002,07
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+2 206 170
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+UZ7035830007
+</td>
+<td style="text-align:left;">
+JSC NEFTGAZTADQIQOT
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+23.06.2020
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+16321,51
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+177 972
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+27.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+UZ7017940006
+</td>
+<td style="text-align:left;">
+YOG’GAR JSC
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+23.06.2020
+</td>
+<td style="text-align:left;">
+22.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+12748,00
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+2 900 640
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+27.07.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+UZ7036030003
+</td>
+<td style="text-align:left;">
+ANDIJONYOG’MOY AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+29.06.2020
+</td>
+<td style="text-align:left;">
+29.07.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+152282,42
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+243 163
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+03.08.2020
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="currentbidsasks-watch-current-bids-and-asks-for-stocks" class="section level2">
+<h2>currentBidsAsks(): Watch current Bids and Asks for stocks</h2>
+<p><code>opendatauzb::currentBidsAsks()</code> returns current bid and ask prices on <a href="www.uzse.uz">the Republican Stock Exchange “Toshkent” database</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">currentBidsAsks</span>()</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Рынок
+</th>
+<th style="text-align:left;">
+Площадка
+</th>
+<th style="text-align:left;">
+Код ЦБ
+</th>
+<th style="text-align:left;">
+Эмитент
+</th>
+<th style="text-align:left;">
+Лучшая цена продажи
+</th>
+<th style="text-align:left;">
+Общее кол-во ЦБ на продажу
+</th>
+<th style="text-align:left;">
+Лучшая цена покупки
+</th>
+<th style="text-align:left;">
+Общее кол-во ЦБ на покупку
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ700055K015</p>
+<pre><code>                AGM1 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Olmaliq KMK&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            14 000 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+1 107
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             13 510 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+244
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7021720006</p>
+<pre><code>                UZMK &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;O’zmetkombinat&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            24 500 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+6 053
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             24 250 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7022100000</p>
+<pre><code>                KSCM &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Quvasoycement&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            419 999,99 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             380 000 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7038380000</p>
+<pre><code>                CBSK &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Chilonzor buyum savdo kompleksi&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            10,1 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+117 728 723
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             10 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+1 349
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7044760005</p>
+<pre><code>                ALKB &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+AT &lt;Aloqabank&gt;
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            162 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+15 344 062
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             129 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+10 000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7045320007</p>
+<pre><code>                ALSM &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Alskom&gt; SK AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            1 445 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+507 791
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             0 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7000550002</p>
+<pre><code>                AGMK &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Olmaliq KMK&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            0 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             138 000 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7001100005</p>
+<pre><code>                KFLT &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;KAFOLAT sug’urta kompaniyasi&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            3 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+39 500
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             2,4 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+1 000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7001560000</p>
+<pre><code>                AGBA &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;Agrobank&gt; ATB
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            850 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+37 076
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             0 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+<p>UZ7001990009</p>
+<pre><code>                QAPI &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+&lt;QashPi&gt; AJ
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>            0 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+<p>UZS</p>
+<pre><code>             500 &lt;/td&gt;</code></pre>
+<td style="text-align:left;">
+1 000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="market-benchmark" class="section level2">
+<h2>Market Benchmark</h2>
+<div id="getmarketindex-download-stock-market-indices-over-the-period-given-across-sectors" class="section level3">
+<h3>getMarketIndex(): Download stock market indices over the period given across sectors</h3>
+<p><code>opendatauzb::getMarketIndex()</code> downloads Uzbek stock market indices (Uzbekistan Composite Index, UCI) by sectors or all sectors. The sector name should be provided as the following (case-insensitive):</p>
+<ul>
+<li>all</li>
+<li>finance</li>
+<li>industry</li>
+<li>agriculture</li>
+<li>construction</li>
+<li>social</li>
+<li>transport</li>
+<li>trade</li>
+<li>other</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">getMarketIndex</span>(<span class="dt">sector =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2019-01.07.2020</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:right;">
+open_price
+</th>
+<th style="text-align:right;">
+high_price
+</th>
+<th style="text-align:right;">
+low_price
+</th>
+<th style="text-align:right;">
+price
+</th>
+<th style="text-align:right;">
+previous_day_price
+</th>
+<th style="text-align:left;">
+marketcap
+</th>
+<th style="text-align:right;">
+trading_volume
+</th>
+<th style="text-align:left;">
+trading_value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+631.01
+</td>
+<td style="text-align:right;">
+631.89
+</td>
+<td style="text-align:left;">
+50762628125202.97
+</td>
+<td style="text-align:right;">
+39406
+</td>
+<td style="text-align:left;">
+209080995.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-29
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+631.89
+</td>
+<td style="text-align:right;">
+633.93
+</td>
+<td style="text-align:left;">
+50834634603971.69
+</td>
+<td style="text-align:right;">
+2721596
+</td>
+<td style="text-align:left;">
+3636344473.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-26
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+633.93
+</td>
+<td style="text-align:right;">
+630.30
+</td>
+<td style="text-align:left;">
+51001238803064.71
+</td>
+<td style="text-align:right;">
+1839782
+</td>
+<td style="text-align:left;">
+1966514035.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+630.30
+</td>
+<td style="text-align:right;">
+630.74
+</td>
+<td style="text-align:left;">
+50704396819803.55
+</td>
+<td style="text-align:right;">
+1567572
+</td>
+<td style="text-align:left;">
+161395630.93
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+630.74
+</td>
+<td style="text-align:right;">
+630.52
+</td>
+<td style="text-align:left;">
+50740347544981.55
+</td>
+<td style="text-align:right;">
+927832
+</td>
+<td style="text-align:left;">
+190699490.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-23
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+630.52
+</td>
+<td style="text-align:right;">
+629.22
+</td>
+<td style="text-align:left;">
+50721207450109.07
+</td>
+<td style="text-align:right;">
+929263
+</td>
+<td style="text-align:left;">
+91273847.95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-22
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+629.22
+</td>
+<td style="text-align:right;">
+631.08
+</td>
+<td style="text-align:left;">
+50615380316876.01
+</td>
+<td style="text-align:right;">
+362174
+</td>
+<td style="text-align:left;">
+61816870.49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-19
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+631.08
+</td>
+<td style="text-align:right;">
+628.68
+</td>
+<td style="text-align:left;">
+50767585388348.08
+</td>
+<td style="text-align:right;">
+376204
+</td>
+<td style="text-align:left;">
+62956982.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-18
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+628.68
+</td>
+<td style="text-align:right;">
+623.88
+</td>
+<td style="text-align:left;">
+50706023712181.8
+</td>
+<td style="text-align:right;">
+260761
+</td>
+<td style="text-align:left;">
+62877415.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+623.88
+</td>
+<td style="text-align:right;">
+625.32
+</td>
+<td style="text-align:left;">
+50228025653941.81
+</td>
+<td style="text-align:right;">
+121899
+</td>
+<td style="text-align:left;">
+13260226.81
+</td>
+</tr>
+</tbody>
+</table>
+<p>The timeframe can be specified by arguments <em>from</em> and <em>to</em> provided in <strong>“%d.%m.%Y”</strong> date format:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">getMarketIndex</span>(<span class="dt">sector =</span> <span class="st">&quot;finance&quot;</span>,</span>
+<span id="cb39-2"><a href="#cb39-2"></a>               <span class="dt">from =</span> <span class="st">&quot;01.01.2018&quot;</span>,</span>
+<span id="cb39-3"><a href="#cb39-3"></a>               <span class="dt">to =</span> <span class="st">&quot;30.06.2020&quot;</span>)</span></code></pre></div>
+<pre><code>## Uzbekistan Composite Index (Sector: Finance) will be downloaded for 01.01.2018-30.06.2020</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:right;">
+open_price
+</th>
+<th style="text-align:right;">
+high_price
+</th>
+<th style="text-align:right;">
+low_price
+</th>
+<th style="text-align:right;">
+price
+</th>
+<th style="text-align:right;">
+previous_day_price
+</th>
+<th style="text-align:left;">
+marketcap
+</th>
+<th style="text-align:right;">
+trading_volume
+</th>
+<th style="text-align:left;">
+trading_value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+556.78
+</td>
+<td style="text-align:right;">
+558.39
+</td>
+<td style="text-align:left;">
+26525646109614.93
+</td>
+<td style="text-align:right;">
+3894
+</td>
+<td style="text-align:left;">
+773539.48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-29
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+558.39
+</td>
+<td style="text-align:right;">
+559.75
+</td>
+<td style="text-align:left;">
+26604652196919.13
+</td>
+<td style="text-align:right;">
+422901
+</td>
+<td style="text-align:left;">
+3244345.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-26
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+559.75
+</td>
+<td style="text-align:right;">
+555.92
+</td>
+<td style="text-align:left;">
+26671764736289.91
+</td>
+<td style="text-align:right;">
+1744583
+</td>
+<td style="text-align:left;">
+37115188.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+555.92
+</td>
+<td style="text-align:right;">
+556.42
+</td>
+<td style="text-align:left;">
+26483449843751.53
+</td>
+<td style="text-align:right;">
+1550101
+</td>
+<td style="text-align:left;">
+36883268.55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+556.42
+</td>
+<td style="text-align:right;">
+555.46
+</td>
+<td style="text-align:left;">
+26507731384751.53
+</td>
+<td style="text-align:right;">
+853125
+</td>
+<td style="text-align:left;">
+29244582.59
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-23
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+555.46
+</td>
+<td style="text-align:right;">
+554.24
+</td>
+<td style="text-align:left;">
+26460689977735.29
+</td>
+<td style="text-align:right;">
+910390
+</td>
+<td style="text-align:left;">
+19572674.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-22
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+554.24
+</td>
+<td style="text-align:right;">
+556.23
+</td>
+<td style="text-align:left;">
+26400391240255.39
+</td>
+<td style="text-align:right;">
+335473
+</td>
+<td style="text-align:left;">
+3442771.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-19
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+556.23
+</td>
+<td style="text-align:right;">
+550.03
+</td>
+<td style="text-align:left;">
+26498428450243.41
+</td>
+<td style="text-align:right;">
+359313
+</td>
+<td style="text-align:left;">
+10325254.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-18
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+550.03
+</td>
+<td style="text-align:right;">
+541.79
+</td>
+<td style="text-align:left;">
+26336542015737.16
+</td>
+<td style="text-align:right;">
+254834
+</td>
+<td style="text-align:left;">
+42391157.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+541.79
+</td>
+<td style="text-align:right;">
+542.81
+</td>
+<td style="text-align:left;">
+25845514571571.58
+</td>
+<td style="text-align:right;">
+117908
+</td>
+<td style="text-align:left;">
+2661407.759999999
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="getticker-load-stock-market-prices-for-certain-timeframe" class="section level2">
+<h2>getTicker(): Load stock market prices for certain timeframe</h2>
+<p><code>opendatauzb::getTicker()</code> obtains stock market prices by security code over the period given:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">getTicker</span>(<span class="st">&quot;UZ7011340005&quot;</span>)</span></code></pre></div>
+<pre><code>## New names:
+## * `` -&gt; ...9
+## * `` -&gt; ...10</code></pre>
+<pre><code>## UZ7011340005 has been downloaded for 01.01.2019-01.07.2020</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+Closed Price
+</th>
+<th style="text-align:right;">
+Change
+</th>
+<th style="text-align:right;">
+Trading Volume (shr)
+</th>
+<th style="text-align:right;">
+Trading Value (KHR)
+</th>
+<th style="text-align:right;">
+Opened
+</th>
+<th style="text-align:right;">
+High
+</th>
+<th style="text-align:right;">
+Low
+</th>
+<th style="text-align:left;">
+symbol
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+-0.46
+</td>
+<td style="text-align:right;">
+1250
+</td>
+<td style="text-align:right;">
+31250.0
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-29
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+1273.0
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-26
+</td>
+<td style="text-align:right;">
+25.40
+</td>
+<td style="text-align:right;">
+1.40
+</td>
+<td style="text-align:right;">
+1531081
+</td>
+<td style="text-align:right;">
+36747698.5
+</td>
+<td style="text-align:right;">
+24.01
+</td>
+<td style="text-align:right;">
+25.47
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-25
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:right;">
+-1.00
+</td>
+<td style="text-align:right;">
+1519418
+</td>
+<td style="text-align:right;">
+36467971.8
+</td>
+<td style="text-align:right;">
+26.50
+</td>
+<td style="text-align:right;">
+26.50
+</td>
+<td style="text-align:right;">
+22.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-24
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+769065
+</td>
+<td style="text-align:right;">
+19334726.5
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+26.48
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-23
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:right;">
+-3.00
+</td>
+<td style="text-align:right;">
+805000
+</td>
+<td style="text-align:right;">
+19334200.0
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-22
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+16000
+</td>
+<td style="text-align:right;">
+430500.0
+</td>
+<td style="text-align:right;">
+26.90
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.90
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-19
+</td>
+<td style="text-align:right;">
+26.87
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+271414
+</td>
+<td style="text-align:right;">
+7311658.6
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-18
+</td>
+<td style="text-align:right;">
+26.42
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+4615
+</td>
+<td style="text-align:right;">
+123215.1
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.42
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-17
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+84873
+</td>
+<td style="text-align:right;">
+2214653.0
+</td>
+<td style="text-align:right;">
+27.50
+</td>
+<td style="text-align:right;">
+27.50
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="kw">getTicker</span>(<span class="st">&quot;UZ7011340005&quot;</span>, </span>
+<span id="cb44-2"><a href="#cb44-2"></a>          <span class="dt">from =</span> <span class="st">&quot;01.01.2018&quot;</span>, </span>
+<span id="cb44-3"><a href="#cb44-3"></a>          <span class="dt">to =</span> <span class="st">&quot;30.06.2020&quot;</span>)</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+Closed Price
+</th>
+<th style="text-align:right;">
+Change
+</th>
+<th style="text-align:right;">
+Trading Volume (shr)
+</th>
+<th style="text-align:right;">
+Trading Value (KHR)
+</th>
+<th style="text-align:right;">
+Opened
+</th>
+<th style="text-align:right;">
+High
+</th>
+<th style="text-align:right;">
+Low
+</th>
+<th style="text-align:left;">
+symbol
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-06-30
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+-0.46
+</td>
+<td style="text-align:right;">
+1250
+</td>
+<td style="text-align:right;">
+31250.0
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-29
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+1273.0
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:right;">
+25.46
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-26
+</td>
+<td style="text-align:right;">
+25.40
+</td>
+<td style="text-align:right;">
+1.40
+</td>
+<td style="text-align:right;">
+1531081
+</td>
+<td style="text-align:right;">
+36747698.5
+</td>
+<td style="text-align:right;">
+24.01
+</td>
+<td style="text-align:right;">
+25.47
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-25
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:right;">
+-1.00
+</td>
+<td style="text-align:right;">
+1519418
+</td>
+<td style="text-align:right;">
+36467971.8
+</td>
+<td style="text-align:right;">
+26.50
+</td>
+<td style="text-align:right;">
+26.50
+</td>
+<td style="text-align:right;">
+22.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-24
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+769065
+</td>
+<td style="text-align:right;">
+19334726.5
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+26.48
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-23
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:right;">
+-3.00
+</td>
+<td style="text-align:right;">
+805000
+</td>
+<td style="text-align:right;">
+19334200.0
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+24.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-22
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+16000
+</td>
+<td style="text-align:right;">
+430500.0
+</td>
+<td style="text-align:right;">
+26.90
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.90
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-19
+</td>
+<td style="text-align:right;">
+26.87
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+271414
+</td>
+<td style="text-align:right;">
+7311658.6
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-18
+</td>
+<td style="text-align:right;">
+26.42
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+4615
+</td>
+<td style="text-align:right;">
+123215.1
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+27.00
+</td>
+<td style="text-align:right;">
+26.42
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-17
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+84873
+</td>
+<td style="text-align:right;">
+2214653.0
+</td>
+<td style="text-align:right;">
+27.50
+</td>
+<td style="text-align:right;">
+27.50
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="constructing-a-portfolio-with-uzbek-stocks" class="section level1">
+<h1>Constructing a portfolio with Uzbek Stocks</h1>
+<div id="creating-a-data-frame-with-stock-prices" class="section level2">
+<h2>Creating a data frame with stock prices</h2>
+<p>For this example, we use <strong>opendatauzb</strong> package’s functions and other packages (<code>quantmod</code>, <code>PerformanceAnalytics</code>, <code>tidyquant</code>) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including <strong>Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino</strong> and others.</p>
+<p>Using <code>getTicker</code> function, we download stock prices for each of those stocks. <strong>Note</strong>: if arguments <em>from</em> and <em>to</em> are not provided, by default, both <code>getMarketIndex()</code> and <code>getTicker()</code> functions download stock prices starting from 01.01.2019.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>asset_group &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;UZ704532K019&quot;</span>, <span class="st">&quot;UZ7045320007&quot;</span>, <span class="st">&quot;UZ7025870005&quot;</span>, <span class="st">&quot;UZ7038380000&quot;</span>, <span class="st">&quot;UZ7025770007&quot;</span>,</span>
+<span id="cb45-2"><a href="#cb45-2"></a>                 <span class="st">&quot;UZ7015030008&quot;</span>, <span class="st">&quot;UZ7043200003&quot;</span>, <span class="st">&quot;UZ703756K015&quot;</span>, <span class="st">&quot;UZ7037560008&quot;</span>, <span class="st">&quot;UZ7016400002&quot;</span>,</span>
+<span id="cb45-3"><a href="#cb45-3"></a>                 <span class="st">&quot;UZ7004510002&quot;</span>, <span class="st">&quot;UZ7023760000&quot;</span>, <span class="st">&quot;UZ703348K011&quot;</span>, <span class="st">&quot;UZ7033480003&quot;</span>, <span class="st">&quot;UZ7035340007&quot;</span>,</span>
+<span id="cb45-4"><a href="#cb45-4"></a>                 <span class="st">&quot;UZ7028090007&quot;</span>, <span class="st">&quot;UZ701134K017&quot;</span>, <span class="st">&quot;UZ7011340005&quot;</span>, <span class="st">&quot;UZ701655K011&quot;</span>, <span class="st">&quot;UZ7016550004&quot;</span>)</span>
+<span id="cb45-5"><a href="#cb45-5"></a></span>
+<span id="cb45-6"><a href="#cb45-6"></a>assets &lt;-<span class="st"> </span>asset_group <span class="op">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="st">  </span><span class="kw">lapply</span>(getTicker) <span class="op">%&gt;%</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span></code></pre></div>
+<p>Having loaded stock prices, we calculate monthly returns using a <code>tidyquant::tq_transmute()</code> function from <code>tidyquant</code> package. Please refer to the <a href="https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html">link</a> for more information on using <code>tidyquant</code> package.</p>
+<p>As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating <a href="https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html">adjusted closing prices</a>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>Ra &lt;-<span class="st"> </span>assets <span class="op">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="st">  </span><span class="kw">group_by</span>(symbol) <span class="op">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="st">  </span><span class="kw">tq_transmute</span>(<span class="dt">select     =</span> <span class="st">&quot;Closed Price&quot;</span>,</span>
+<span id="cb46-4"><a href="#cb46-4"></a>               <span class="dt">mutate_fun =</span> periodReturn,</span>
+<span id="cb46-5"><a href="#cb46-5"></a>               <span class="dt">period     =</span> <span class="st">&quot;monthly&quot;</span>,</span>
+<span id="cb46-6"><a href="#cb46-6"></a>               <span class="dt">col_rename =</span> <span class="st">&quot;Ra&quot;</span>)</span></code></pre></div>
+<p>The output presents only first six rows of calculated monthly returns.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+symbol
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+Ra
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-01-31
+</td>
+<td style="text-align:right;">
+-0.0029851
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-02-28
+</td>
+<td style="text-align:right;">
+0.0059880
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-03-29
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-04-30
+</td>
+<td style="text-align:right;">
+-0.0059524
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-05-31
+</td>
+<td style="text-align:right;">
+-0.0131737
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:left;">
+2019-06-28
+</td>
+<td style="text-align:right;">
+-0.0048544
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="market-index-uzbekistan-composite-index-uci" class="section level2">
+<h2>Market Index (Uzbekistan Composite Index, UCI)</h2>
+<p>After collecting data for our stocks, we download overall market index as baseline prices for our analysis.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Baseline prices</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>Rb &lt;-<span class="st"> </span><span class="kw">getMarketIndex</span>(<span class="st">&quot;all&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="st">  </span><span class="kw">tq_transmute</span>(<span class="dt">select     =</span> price,</span>
+<span id="cb47-4"><a href="#cb47-4"></a>               <span class="dt">mutate_fun =</span> periodReturn,</span>
+<span id="cb47-5"><a href="#cb47-5"></a>               <span class="dt">period     =</span> <span class="st">&quot;monthly&quot;</span>,</span>
+<span id="cb47-6"><a href="#cb47-6"></a>               <span class="dt">col_rename =</span> <span class="st">&quot;Rb&quot;</span>)</span></code></pre></div>
+<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2019-01.07.2020</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:right;">
+Rb
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2019-01-31
+</td>
+<td style="text-align:right;">
+-0.6157297
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-02-28
+</td>
+<td style="text-align:right;">
+0.0345058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-03-29
+</td>
+<td style="text-align:right;">
+0.7903746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-04-30
+</td>
+<td style="text-align:right;">
+0.0249493
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-05-31
+</td>
+<td style="text-align:right;">
+-0.0012299
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2019-06-28
+</td>
+<td style="text-align:right;">
+-0.0055492
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="building-the-capital-asset-pricing-model-capm" class="section level2">
+<h2>Building the Capital Asset Pricing Model (CAPM)</h2>
+<p>To evaluate if the stock is valued fairly considering associated risks and expected returns, we employ <a href="https://corporatefinanceinstitute.com/resources/knowledge/finance/what-is-capm-formula/">CAPM</a> model. We use <code>tidyquant::tq_performance()</code> function from <code>tidyquant</code> package.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>RaRb_capm &lt;-<span class="st"> </span>RaRb <span class="op">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="st">  </span><span class="kw">tq_performance</span>(<span class="dt">Ra =</span> Ra,</span>
+<span id="cb49-3"><a href="#cb49-3"></a>                 <span class="dt">Rb =</span> Rb,</span>
+<span id="cb49-4"><a href="#cb49-4"></a>                 <span class="dt">Rf =</span> <span class="fl">0.15</span>,</span>
+<span id="cb49-5"><a href="#cb49-5"></a>                 <span class="dt">performance_fun =</span> table.CAPM)</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+symbol
+</th>
+<th style="text-align:right;">
+ActivePremium
+</th>
+<th style="text-align:right;">
+Alpha
+</th>
+<th style="text-align:right;">
+Beta
+</th>
+<th style="text-align:right;">
+InformationRatio
+</th>
+<th style="text-align:right;">
+TrackingError
+</th>
+<th style="text-align:right;">
+TreynorRatio
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+UZ704532K019
+</td>
+<td style="text-align:right;">
+0.0727
+</td>
+<td style="text-align:right;">
+-0.1587
+</td>
+<td style="text-align:right;">
+0.0018
+</td>
+<td style="text-align:right;">
+0.0850
+</td>
+<td style="text-align:right;">
+0.8552
+</td>
+<td style="text-align:right;">
+-497.9650
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7045320007
+</td>
+<td style="text-align:right;">
+0.0727
+</td>
+<td style="text-align:right;">
+-0.1587
+</td>
+<td style="text-align:right;">
+0.0018
+</td>
+<td style="text-align:right;">
+0.0850
+</td>
+<td style="text-align:right;">
+0.8552
+</td>
+<td style="text-align:right;">
+-497.9650
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7025870005
+</td>
+<td style="text-align:right;">
+1.4287
+</td>
+<td style="text-align:right;">
+-0.0994
+</td>
+<td style="text-align:right;">
+-0.4307
+</td>
+<td style="text-align:right;">
+0.9158
+</td>
+<td style="text-align:right;">
+1.5600
+</td>
+<td style="text-align:right;">
+1.5429
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7038380000
+</td>
+<td style="text-align:right;">
+-0.8057
+</td>
+<td style="text-align:right;">
+-0.1627
+</td>
+<td style="text-align:right;">
+0.5338
+</td>
+<td style="text-align:right;">
+-0.7865
+</td>
+<td style="text-align:right;">
+1.0244
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7025770007
+</td>
+<td style="text-align:right;">
+-0.1388
+</td>
+<td style="text-align:right;">
+-0.1862
+</td>
+<td style="text-align:right;">
+-0.0779
+</td>
+<td style="text-align:right;">
+-0.1404
+</td>
+<td style="text-align:right;">
+0.9889
+</td>
+<td style="text-align:right;">
+11.7088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7015030008
+</td>
+<td style="text-align:right;">
+2.3364
+</td>
+<td style="text-align:right;">
+0.0249
+</td>
+<td style="text-align:right;">
+0.0419
+</td>
+<td style="text-align:right;">
+1.3960
+</td>
+<td style="text-align:right;">
+1.6737
+</td>
+<td style="text-align:right;">
+-12.9614
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7043200003
+</td>
+<td style="text-align:right;">
+1.1084
+</td>
+<td style="text-align:right;">
+-0.0927
+</td>
+<td style="text-align:right;">
+-0.0551
+</td>
+<td style="text-align:right;">
+1.0823
+</td>
+<td style="text-align:right;">
+1.0241
+</td>
+<td style="text-align:right;">
+12.6884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ703756K015
+</td>
+<td style="text-align:right;">
+0.1932
+</td>
+<td style="text-align:right;">
+-0.1406
+</td>
+<td style="text-align:right;">
+0.0580
+</td>
+<td style="text-align:right;">
+0.2401
+</td>
+<td style="text-align:right;">
+0.8049
+</td>
+<td style="text-align:right;">
+-14.7627
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7037560008
+</td>
+<td style="text-align:right;">
+0.1932
+</td>
+<td style="text-align:right;">
+-0.1406
+</td>
+<td style="text-align:right;">
+0.0580
+</td>
+<td style="text-align:right;">
+0.2401
+</td>
+<td style="text-align:right;">
+0.8049
+</td>
+<td style="text-align:right;">
+-14.7627
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7016400002
+</td>
+<td style="text-align:right;">
+2.2875
+</td>
+<td style="text-align:right;">
+0.0676
+</td>
+<td style="text-align:right;">
+0.5125
+</td>
+<td style="text-align:right;">
+1.5274
+</td>
+<td style="text-align:right;">
+1.4976
+</td>
+<td style="text-align:right;">
+-0.9731
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7004510002
+</td>
+<td style="text-align:right;">
+0.0877
+</td>
+<td style="text-align:right;">
+-0.1704
+</td>
+<td style="text-align:right;">
+-0.1249
+</td>
+<td style="text-align:right;">
+0.0867
+</td>
+<td style="text-align:right;">
+1.0113
+</td>
+<td style="text-align:right;">
+7.0095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7023760000
+</td>
+<td style="text-align:right;">
+102.6309
+</td>
+<td style="text-align:right;">
+0.5845
+</td>
+<td style="text-align:right;">
+-0.3011
+</td>
+<td style="text-align:right;">
+19.4079
+</td>
+<td style="text-align:right;">
+5.2881
+</td>
+<td style="text-align:right;">
+-11.0453
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ703348K011
+</td>
+<td style="text-align:right;">
+0.9685
+</td>
+<td style="text-align:right;">
+-0.0584
+</td>
+<td style="text-align:right;">
+-0.0334
+</td>
+<td style="text-align:right;">
+0.6678
+</td>
+<td style="text-align:right;">
+1.4502
+</td>
+<td style="text-align:right;">
+22.4476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7033480003
+</td>
+<td style="text-align:right;">
+0.9685
+</td>
+<td style="text-align:right;">
+-0.0584
+</td>
+<td style="text-align:right;">
+-0.0334
+</td>
+<td style="text-align:right;">
+0.6678
+</td>
+<td style="text-align:right;">
+1.4502
+</td>
+<td style="text-align:right;">
+22.4476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7035340007
+</td>
+<td style="text-align:right;">
+25964.5829
+</td>
+<td style="text-align:right;">
+4.5432
+</td>
+<td style="text-align:right;">
+-0.4637
+</td>
+<td style="text-align:right;">
+913.9865
+</td>
+<td style="text-align:right;">
+28.4081
+</td>
+<td style="text-align:right;">
+-1991.5937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7028090007
+</td>
+<td style="text-align:right;">
+0.8154
+</td>
+<td style="text-align:right;">
+-0.1515
+</td>
+<td style="text-align:right;">
+-0.4841
+</td>
+<td style="text-align:right;">
+0.5618
+</td>
+<td style="text-align:right;">
+1.4514
+</td>
+<td style="text-align:right;">
+1.5697
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ701134K017
+</td>
+<td style="text-align:right;">
+0.1596
+</td>
+<td style="text-align:right;">
+-0.1349
+</td>
+<td style="text-align:right;">
+-0.0284
+</td>
+<td style="text-align:right;">
+0.1374
+</td>
+<td style="text-align:right;">
+1.1616
+</td>
+<td style="text-align:right;">
+30.5795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7011340005
+</td>
+<td style="text-align:right;">
+0.1596
+</td>
+<td style="text-align:right;">
+-0.1349
+</td>
+<td style="text-align:right;">
+-0.0284
+</td>
+<td style="text-align:right;">
+0.1374
+</td>
+<td style="text-align:right;">
+1.1616
+</td>
+<td style="text-align:right;">
+30.5795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ701655K011
+</td>
+<td style="text-align:right;">
+0.2771
+</td>
+<td style="text-align:right;">
+-0.1410
+</td>
+<td style="text-align:right;">
+-0.0758
+</td>
+<td style="text-align:right;">
+0.2604
+</td>
+<td style="text-align:right;">
+1.0642
+</td>
+<td style="text-align:right;">
+11.1717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UZ7016550004
+</td>
+<td style="text-align:right;">
+0.2771
+</td>
+<td style="text-align:right;">
+-0.1410
+</td>
+<td style="text-align:right;">
+-0.0758
+</td>
+<td style="text-align:right;">
+0.2604
+</td>
+<td style="text-align:right;">
+1.0642
+</td>
+<td style="text-align:right;">
+11.1717
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculating-sharpe-ratio-for-individual-stocks" class="section level2">
+<h2>Calculating Sharpe ratio for individual stocks</h2>
+<p>We estimate Sharpe ratio for all our stocks to see returns on investment per amount of taken risks. As a rule of thumb, the Sharpe ratio greater than 3 is classified as <strong>Excellent</strong>, an interval 2.00-2.99 is <strong>Very Good</strong>, 1.00-1.99 range is <strong>Acceptable</strong>, the ratio less than 1 is classified as <strong>Bad or Sub-optimal</strong>.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>RaRb <span class="op">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="st">  </span><span class="kw">tq_performance</span>(<span class="dt">Ra =</span> Ra,</span>
+<span id="cb50-3"><a href="#cb50-3"></a>    <span class="dt">Rb =</span> <span class="ot">NULL</span>,</span>
+<span id="cb50-4"><a href="#cb50-4"></a>    <span class="dt">performance_fun =</span> SharpeRatio,</span>
+<span id="cb50-5"><a href="#cb50-5"></a>    <span class="dt">Rf =</span> <span class="fl">0.15</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb50-6"><a href="#cb50-6"></a><span class="st">  </span><span class="kw">formattable</span>(<span class="kw">list</span>(<span class="st">&quot;ESSharpe(Rf=15%,p=95%)&quot;</span> =<span class="st"> </span><span class="kw">formatter</span>(<span class="st">&quot;span&quot;</span>, </span>
+<span id="cb50-7"><a href="#cb50-7"></a>                                                        <span class="dt">style =</span> x <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, </span>
+<span id="cb50-8"><a href="#cb50-8"></a>                                                                           <span class="kw">style</span>(<span class="dt">color =</span> <span class="st">&quot;green&quot;</span>, </span>
+<span id="cb50-9"><a href="#cb50-9"></a>                                                                                 <span class="dt">font.weight =</span> <span class="st">&quot;bold&quot;</span>), </span>
+<span id="cb50-10"><a href="#cb50-10"></a>                                                                           <span class="ot">NA</span>))))</span></code></pre></div>
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:right;">
+symbol
+</th>
+<th style="text-align:right;">
+ESSharpe(Rf=15%,p=95%)
+</th>
+<th style="text-align:right;">
+StdDevSharpe(Rf=15%,p=95%)
+</th>
+<th style="text-align:right;">
+VaRSharpe(Rf=15%,p=95%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+UZ704532K019
+</td>
+<td style="text-align:right;">
+<span>-1.129775910</span>
+</td>
+<td style="text-align:right;">
+-3.577010612
+</td>
+<td style="text-align:right;">
+-1.70537933
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7045320007
+</td>
+<td style="text-align:right;">
+<span>-1.129775910</span>
+</td>
+<td style="text-align:right;">
+-3.577010612
+</td>
+<td style="text-align:right;">
+-1.70537933
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7025870005
+</td>
+<td style="text-align:right;">
+<span>-0.097761112</span>
+</td>
+<td style="text-align:right;">
+-0.133376065
+</td>
+<td style="text-align:right;">
+-0.10975059
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7038380000
+</td>
+<td style="text-align:right;">
+<span>-0.244304750</span>
+</td>
+<td style="text-align:right;">
+-0.778967616
+</td>
+<td style="text-align:right;">
+-0.36440612
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7025770007
+</td>
+<td style="text-align:right;">
+<span>-0.681662851</span>
+</td>
+<td style="text-align:right;">
+-1.534052136
+</td>
+<td style="text-align:right;">
+-0.81630150
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7015030008
+</td>
+<td style="text-align:right;">
+<span>0.036537513</span>
+</td>
+<td style="text-align:right;">
+0.045291054
+</td>
+<td style="text-align:right;">
+0.05254209
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7043200003
+</td>
+<td style="text-align:right;">
+<span>-0.436899843</span>
+</td>
+<td style="text-align:right;">
+-0.578133689
+</td>
+<td style="text-align:right;">
+-0.71684361
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ703756K015
+</td>
+<td style="text-align:right;">
+<span>-1.976410668</span>
+</td>
+<td style="text-align:right;">
+-3.630355328
+</td>
+<td style="text-align:right;">
+-2.35146330
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7037560008
+</td>
+<td style="text-align:right;">
+<span>-1.976410668</span>
+</td>
+<td style="text-align:right;">
+-3.630355328
+</td>
+<td style="text-align:right;">
+-2.35146330
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7016400002
+</td>
+<td style="text-align:right;">
+<span>-0.002298659</span>
+</td>
+<td style="text-align:right;">
+-0.005296075
+</td>
+<td style="text-align:right;">
+-0.03602130
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7004510002
+</td>
+<td style="text-align:right;">
+<span>-0.851934803</span>
+</td>
+<td style="text-align:right;">
+-1.444578519
+</td>
+<td style="text-align:right;">
+-0.97795866
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7023760000
+</td>
+<td style="text-align:right;">
+<span>0.420858586</span>
+</td>
+<td style="text-align:right;">
+0.339161440
+</td>
+<td style="text-align:right;">
+0.53803186
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ703348K011
+</td>
+<td style="text-align:right;">
+<span>-0.116061246</span>
+</td>
+<td style="text-align:right;">
+-0.160784755
+</td>
+<td style="text-align:right;">
+-0.14217280
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7033480003
+</td>
+<td style="text-align:right;">
+<span>-0.116061246</span>
+</td>
+<td style="text-align:right;">
+-0.160784755
+</td>
+<td style="text-align:right;">
+-0.14217280
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7035340007
+</td>
+<td style="text-align:right;">
+<span style="color: green; font-weight: bold">3.648331211</span>
+</td>
+<td style="text-align:right;">
+0.446260387
+</td>
+<td style="text-align:right;">
+3.64833121
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7028090007
+</td>
+<td style="text-align:right;">
+<span>-0.201119387</span>
+</td>
+<td style="text-align:right;">
+-0.351575798
+</td>
+<td style="text-align:right;">
+-0.43558954
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ701134K017
+</td>
+<td style="text-align:right;">
+<span>-0.371321203</span>
+</td>
+<td style="text-align:right;">
+-0.586659200
+</td>
+<td style="text-align:right;">
+-0.49537534
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7011340005
+</td>
+<td style="text-align:right;">
+<span>-0.371321203</span>
+</td>
+<td style="text-align:right;">
+-0.586659200
+</td>
+<td style="text-align:right;">
+-0.49537534
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ701655K011
+</td>
+<td style="text-align:right;">
+<span>-0.488637331</span>
+</td>
+<td style="text-align:right;">
+-0.806867966
+</td>
+<td style="text-align:right;">
+-0.59950520
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+UZ7016550004
+</td>
+<td style="text-align:right;">
+<span>-0.488637331</span>
+</td>
+<td style="text-align:right;">
+-0.806867966
+</td>
+<td style="text-align:right;">
+-0.59950520
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="single-portfolio-performance" class="section level2">
+<h2>(Single) Portfolio performance</h2>
+<p>Based on the ratios we calculated above, we choose two stocks for our portfolio: <strong>UZ7015030008 (MSBU)</strong> and <strong>UZ7035340007 (UZKB)</strong>.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>wts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
+<span id="cb51-2"><a href="#cb51-2"></a>         <span class="fl">0.35</span>, <span class="co">#6</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>         <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">8</span>),</span>
+<span id="cb51-4"><a href="#cb51-4"></a>         <span class="fl">0.65</span>, <span class="co">#15</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a>         <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb51-6"><a href="#cb51-6"></a></span>
+<span id="cb51-7"><a href="#cb51-7"></a>portfolio_returns_monthly &lt;-<span class="st"> </span>Ra <span class="op">%&gt;%</span></span>
+<span id="cb51-8"><a href="#cb51-8"></a><span class="st">  </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col   =</span> symbol,</span>
+<span id="cb51-9"><a href="#cb51-9"></a>               <span class="dt">returns_col  =</span> Ra,</span>
+<span id="cb51-10"><a href="#cb51-10"></a>               <span class="dt">weights      =</span> wts,</span>
+<span id="cb51-11"><a href="#cb51-11"></a>               <span class="dt">col_rename   =</span> <span class="st">&quot;Ra&quot;</span>)</span>
+<span id="cb51-12"><a href="#cb51-12"></a></span>
+<span id="cb51-13"><a href="#cb51-13"></a><span class="kw">left_join</span>(portfolio_returns_monthly, </span>
+<span id="cb51-14"><a href="#cb51-14"></a>          Rb,</span>
+<span id="cb51-15"><a href="#cb51-15"></a>          <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>=<span class="st">&quot;date&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-16"><a href="#cb51-16"></a><span class="st">  </span><span class="kw">tq_performance</span>(<span class="dt">Ra =</span> Ra, <span class="dt">Rb =</span> Rb, <span class="dt">performance_fun =</span> table.CAPM) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-17"><a href="#cb51-17"></a><span class="st">  </span><span class="kw">gather</span>() <span class="op">%&gt;%</span></span>
+<span id="cb51-18"><a href="#cb51-18"></a><span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-19"><a href="#cb51-19"></a><span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="kw">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>))</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+key
+</th>
+<th style="text-align:right;">
+value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ActivePremium
+</td>
+<td style="text-align:right;">
+6.8300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Alpha
+</td>
+<td style="text-align:right;">
+0.6974
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AnnualizedAlpha
+</td>
+<td style="text-align:right;">
+571.2191
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta
+</td>
+<td style="text-align:right;">
+0.2564
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta-
+</td>
+<td style="text-align:right;">
+0.0067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beta+
+</td>
+<td style="text-align:right;">
+-1.1584
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Correlation
+</td>
+<td style="text-align:right;">
+0.0221
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Correlationp-value
+</td>
+<td style="text-align:right;">
+0.9308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+InformationRatio
+</td>
+<td style="text-align:right;">
+0.7294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R-squared
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TrackingError
+</td>
+<td style="text-align:right;">
+9.3640
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TreynorRatio
+</td>
+<td style="text-align:right;">
+21.1231
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="portfolio-growth" class="section level2">
+<h2>Portfolio growth</h2>
+<p>On condition that our initial assumptions hold, let us see how 100,000 UZS investment in these stocks would grow since 1 January 2019.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>portfolio_growth_monthly &lt;-<span class="st"> </span>Ra <span class="op">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="st">  </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col   =</span> symbol,</span>
+<span id="cb52-3"><a href="#cb52-3"></a>               <span class="dt">returns_col  =</span> Ra,</span>
+<span id="cb52-4"><a href="#cb52-4"></a>               <span class="dt">weights      =</span> wts,</span>
+<span id="cb52-5"><a href="#cb52-5"></a>               <span class="dt">col_rename   =</span> <span class="st">&quot;investment.growth&quot;</span>,</span>
+<span id="cb52-6"><a href="#cb52-6"></a>               <span class="dt">wealth.index =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">investment.growth =</span> investment.growth <span class="op">*</span><span class="st"> </span><span class="dv">100000</span>)</span></code></pre></div>
+<p>As the graph below shows, the initial investment of 100,000 UZS in these 2 stocks in 1 January 2019 is worth around 2.2M UZS as of 30 June 2020 without inflation adjustment.</p>
+<p><strong>Note:</strong> These estimates are for only illustrative purposes of the practical use of <em>opendatauzb</em> package. The real returns on investment may rely heavily on the assumptions drawn earlier and other exogenous shocks to Uzbek Stock Market.</p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
