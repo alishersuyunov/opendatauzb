@@ -21,6 +21,8 @@ Imports:
     lubridate,
     tidyr,
     xml2
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false

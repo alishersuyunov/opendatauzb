@@ -18,7 +18,7 @@
 #' @examples
 #'  \dontrun{
 #'  getMarketIndex(sector = "all")
-#'  getMarketIndex(sector = "finance", from = "01.01.2020, to = "01.05.2020")}
+#'  getMarketIndex(sector = "finance", from = "01.01.2020", to = "01.05.2020")}
 getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture",
                                       "construction", "social", "transport", "trade", "other"),
                            from = "01.01.2019",

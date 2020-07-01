@@ -1,6 +1,6 @@
-#'  Obtaining current Bids and Asks for stocks on the Republican Stock Exchange "Toshkent"
+#'  Obtaining current Bids and Asks for stocks
 #'
-#'  Returns bid and ask prices
+#'  Returns current bid and ask prices on the Republican Stock Exchange "Toshkent"
 #'
 #' @param security_type A string that indicates the type of the security: "STK" for stocks, "BND" for bonds, "RPO" for Repeat Public Offering, "FCT" for
 #' @param security_code A unique identifier of the security (e.g. UZ7011340005). Note: Don't confuse with ISIN code

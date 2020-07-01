@@ -2,7 +2,7 @@
 % Please edit documentation in R/currentBidsAsks.R
 \name{currentBidsAsks}
 \alias{currentBidsAsks}
-\title{Obtaining current Bids and Asks for stocks on the Republican Stock Exchange "Toshkent"}
+\title{Obtaining current Bids and Asks for stocks}
 \usage{
 currentBidsAsks(security_code = "", security_type = "STK")
 }
@@ -15,7 +15,7 @@ currentBidsAsks(security_code = "", security_type = "STK")
 Returns a data frame
 }
 \description{
-Returns bid and ask prices
+Returns current bid and ask prices on the Republican Stock Exchange "Toshkent"
 }
 \examples{
  \dontrun{

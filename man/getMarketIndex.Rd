@@ -24,6 +24,11 @@ Returns a data frame
 \description{
 Provides stock market indices over the period given
 }
+\examples{
+ \dontrun{
+ getMarketIndex(sector = "all")
+ getMarketIndex(sector = "finance", from = "01.01.2020", to = "01.05.2020")}
+}
 \seealso{
 \code{\link{getSecurities}} or \code{\link{RegisteredSecurities}} to see the complete list of available securities
 

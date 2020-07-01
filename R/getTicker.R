@@ -54,7 +54,7 @@ getTicker <- function(symbol, from = "01.01.2019", to = "dd.mm.yyyy") {
   unlink(temp_downloaded_stock)
   rm(temp_downloaded_stock)
 
-  message(glue("{symbol} has been downloaded"))
+  message(glue("{symbol} has been downloaded for {from}-{to}"))
 
   return(historical_data)
   }
