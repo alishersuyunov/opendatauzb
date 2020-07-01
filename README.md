@@ -6,8 +6,6 @@ Downloading available datasets from an official open data source of Uzbekistan
 - Version 0.1.1 offers several new functions to download Uzbek Stock Market data along with a vignette documentation
 - First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](data.gov.uz)
 
-The package is provided under the GPL-3 license.
-
 In the latest version (0.1.1), several new functions have been added to collect Uzbek Stock Market data. 
 
 `getTicker()`: obtains stock market prices over the given period 
@@ -25,6 +23,7 @@ In the latest version (0.1.1), several new functions have been added to collect 
 `RegisteredSecurities()`: returns a data frame with the list of securities from [the Central Securities Depository](www.deponet.uz) database
 
 <br>
+
 For more information, please refer to vignette documentation with a few examples:<br>
 
 `browseVignettes("opendatauzb")`<br>
@@ -40,6 +39,11 @@ The package has also three key functions:
 
 `getData_dictionary(dataset_id)` - downloads a data dictionary (variables) for the dataset
 
+## INSTALLATION
+`devtools::install_github("alishersuyunov/opendatauzb)`<br>
+
+## LICENSE
+The package is provided under the GPL-3 license.
 
 <br><br>
 If you have any suggestions to be included in further releases or find any bugs, please feel free to raise a trouble ticket on: https://github.com/alishersuyunov/opendatauzb/issues
