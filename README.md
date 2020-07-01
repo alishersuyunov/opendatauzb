@@ -39,10 +39,13 @@ The package has also three key functions:
 
 `getData_dictionary(dataset_id)` - downloads a data dictionary (variables) for the dataset
 
-## INSTALLATION
+## Installation
+Execute the following code to install the R package from R environment:
 `devtools::install_github("alishersuyunov/opendatauzb)`<br>
 
-## LICENSE
+To download and install using pre-compiled binary files, please refer to the [releases](https://github.com/alishersuyunov/opendatauzb/tree/master/releases) folder.
+
+## License
 The package is provided under the GPL-3 license.
 
 <br><br>
