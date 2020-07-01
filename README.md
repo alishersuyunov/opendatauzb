@@ -4,7 +4,7 @@ Downloading available datasets from an official open data source of Uzbekistan
 
 ## RELEASE NOTES:
 - Version 0.1.1 offers several new functions to download Uzbek Stock Market data along with a vignette documentation
-- First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](data.gov.uz)
+- First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](http://data.gov.uz)
 
 In the latest version (0.1.1), several new functions have been added to collect Uzbek Stock Market data. 
 
@@ -18,9 +18,9 @@ In the latest version (0.1.1), several new functions have been added to collect 
 
 `ipo()`: returns a data frame with public offerings in last five years
 
-`getSecurities()`: returns a data frame with the list of securities from [the Republican Stock Exchange "Toshkent" database](www.uzse.uz)
+`getSecurities()`: returns a data frame with the list of securities from [the Republican Stock Exchange "Toshkent" database](http://www.uzse.uz)
 
-`RegisteredSecurities()`: returns a data frame with the list of securities from [the Central Securities Depository](www.deponet.uz) database
+`RegisteredSecurities()`: returns a data frame with the list of securities from [the Central Securities Depository](http://www.deponet.uz) database
 
 <br>
 
