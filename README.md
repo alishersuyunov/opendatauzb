@@ -1,5 +1,7 @@
 # opendatauzb 0.1.1
 
+[![Travis build status](https://travis-ci.com/alishersuyunov/opendatauzb.svg?branch=master)](https://travis-ci.com/alishersuyunov/opendatauzb)
+
 Downloading available datasets from an official open data source of Uzbekistan
 
 ## RELEASE NOTES:
