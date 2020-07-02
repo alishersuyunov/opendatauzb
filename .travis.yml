@@ -2,5 +2,3 @@
 
 language: R
 cache: packages
-
-r_build_args: --no-build-vignettes

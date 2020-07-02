@@ -11,6 +11,9 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE, warning=FALSE}
+
+install.packages(c("quantmod", "tidyverse", "PerformanceAnalytics", "tidyquant", "opendatauzb", "kableExtra", "formattable"))
+
 library(rmarkdown)
 library(quantmod)
 library(tidyverse)
