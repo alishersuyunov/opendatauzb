@@ -21,9 +21,10 @@ Imports:
     lubridate,
     tidyr,
     xml2
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown, quantmod, tidyverse, PerformanceAnalytics, tidyquant, kableExtra, formattable
 VignetteBuilder: knitr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
 RoxygenNote: 7.1.1
+
