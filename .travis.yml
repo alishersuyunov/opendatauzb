@@ -7,3 +7,5 @@ before_install:
 addons:
   apt:
     update: false
+
+warnings_are_errors: false
