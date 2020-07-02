@@ -26,7 +26,7 @@ In the latest version (0.1.1), several new functions have been added to collect 
 
 <br>
 
-For more information, please refer to vignette documentation with a few examples:<br>
+For more information, please refer to [vignette documentation](https://gitcdn.xyz/repo/alishersuyunov/opendatauzb/master/doc/opendatauzb.html) with a few examples:<br>
 
 `browseVignettes("opendatauzb")`<br>
 `vignette("opendatauzb", package = "opendatauzb")`
