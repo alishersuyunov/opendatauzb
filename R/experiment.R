@@ -224,3 +224,21 @@ currentBidsAsks <- function(security_code = "", security_type = "STK") {
 
 # df <- getTicker("UZ7011340005")
 # df <- c("UZ7011340005", "UZ7001560000") %>% lapply(getTicker) %>% bind_rows()
+
+comparer <- function(id) {
+  data.frame(id = id,
+             isIdentical = identical(getData(id, format = "csv"),
+                                     getData(id, format = "json"))) %>% return()
+}
+
+ids <- availableDatasets()$id %>% as.numeric()
+result <- ids %>% lapply(comparer) %>% bind_rows()
+
+
+exp_json <- function() {
+  temp_downloaded_stock <- tempfile(fileext = ".json")
+  GET("https://data.gov.uz/ru/api/v1/json/dataset?access_key=46b7bb492f5379d5a464dc73476e4316") %>%
+    content(type = "raw") %>%
+    writeBin(temp_downloaded_stock)
+  temp_downloaded_stock %>% RcppSimdJson:::.load_json()
+}

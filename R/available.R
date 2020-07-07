@@ -6,8 +6,7 @@
 #'
 #' @param id Numeric or String Numeric. An identifier of the organisation/authority providing the dataset
 #'
-#' @import dplyr jsonlite httr assertive stringr
-#' @importFrom glue glue
+#' @import dplyr jsonlite httr assertive stringr glue
 #' @return Returns a data frame
 #' @export
 #'

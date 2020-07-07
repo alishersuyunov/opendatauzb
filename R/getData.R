@@ -3,18 +3,14 @@
 #'  Downloads available datasets and related information from data.gov.uz API
 #'
 #' @param id a numeric or character that represents the dataset identifier
-#' @param format a character. A format of the response from the server (either CSV or JSON)
+#' @param format a character. A format (CSV or JSON) of the response from the server
 #' @param sep a field separator character. Values on each line of the file are separated by this character. By default it is a semicolon ';'. The separator character is passed to the function read.csv.
-#' @param dec the character used in the file for decimal points. Default value is comma ','.
 #' @param header a logical value representing if the file contains variable names on its first line
-#' @param encoding encoding of the input strings. Default value is 'UTF-8'
 #'
 #' @author Alisher Suyunov
 #'
-#' @import dplyr jsonlite httr assertive stringr
+#' @import dplyr jsonlite httr assertive stringr glue readr
 #' @importFrom glue glue
-#' @importFrom utils read.csv
-#' @importFrom utils download.file
 #' @return Returns a data frame
 #' @export
 #'
@@ -28,31 +24,24 @@
 #'  getData("7")
 #'  getData_dictionary(7)
 #'  getData_history(7) }
-getData <- function(id, format = "csv", sep = ";", dec = ",") {
+getData <- function(id, format = "csv", sep = ";") {
   assert_any_are_numeric_strings(id, severity = "stop")
-  rawDataset <- tempfile(fileext = paste0(".", format))
-
-  download.file(glue("https://data.gov.uz/ru/datasets/download/{id}/{format}"),
-                rawDataset)
 
   if(format == "csv") {
-    read.csv(rawDataset,
-             stringsAsFactors = FALSE,
-             sep = fixed(sep),
-             dec = dec,
-             encoding = "UTF-8",
-             header = FALSE) %>% return()
+    read_delim(glue("https://data.gov.uz/ru/datasets/download/{id}/{format}"),
+             delim = fixed(sep),
+             col_names = FALSE) %>% return()
   } else if(format == "json") {
-    rawDataset %>% fromJSON() %>% return()
+    glue("https://data.gov.uz/ru/datasets/download/{id}/{format}") %>% fromJSON() %>% return()
   }
 }
 
 #' @describeIn getData Downloads a dataset dictionary (variables) for the datasets
 #' @export
-getData_dictionary <- function(id, sep = ";", header = FALSE, encoding = "UTF-8", format = "csv") {
+getData_dictionary <- function(id, sep = ";", header = FALSE) {
     assert_any_are_numeric_strings(id, severity = "stop")
-    glue("https://data.gov.uz/ru/convert/download/{id}?ext={format}") %>%
-    read.csv(sep = fixed(sep), encoding = encoding, header = header) %>%
+    glue("https://data.gov.uz/ru/convert/download/{id}?ext=csv") %>%
+    read_delim(delim = fixed(sep), col_names = header) %>%
     return()
 }
 

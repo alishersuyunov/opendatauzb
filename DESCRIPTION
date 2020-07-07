@@ -17,6 +17,7 @@ Imports:
     stringr,
     utils,
     readxl,
+    readr,
     rvest,
     lubridate,
     tidyr,
