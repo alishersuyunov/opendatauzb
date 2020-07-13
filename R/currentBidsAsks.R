@@ -7,7 +7,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive
+#' @import httr purrr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive textclean
 #' @return Returns a data frame
 #' @export
 #'
@@ -26,5 +26,7 @@ currentBidsAsks <- function(security_code = "", security_type = "STK") {
     content(type = "text", encoding = "UTF-8") %>%
     read_html() %>%
     html_table() %>% .[[1]] %>%
+    map_df(replace_html) %>%
+    map_df(replace_white) %>%
     return()
 }

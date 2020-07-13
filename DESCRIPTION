@@ -10,6 +10,7 @@ License: GPL-3
 Encoding: UTF-8
 Imports:
     dplyr,
+    purrr,
     glue,
     jsonlite,
     httr,
@@ -21,7 +22,8 @@ Imports:
     rvest,
     lubridate,
     tidyr,
-    xml2
+    xml2,
+    textclean
 Suggests: 
     knitr,
     rmarkdown,

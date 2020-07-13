@@ -6,30 +6,20 @@
 \alias{getData_history}
 \title{Downloading Datasets}
 \usage{
-getData(id, format = "csv", sep = ";", dec = ",")
+getData(id, format = "csv", sep = ";")
 
-getData_dictionary(
-  id,
-  sep = ";",
-  header = FALSE,
-  encoding = "UTF-8",
-  format = "csv"
-)
+getData_dictionary(id, sep = ";", header = FALSE)
 
 getData_history(id)
 }
 \arguments{
 \item{id}{a numeric or character that represents the dataset identifier}
 
-\item{format}{a character. A format of the response from the server (either CSV or JSON)}
+\item{format}{a character. A format (CSV or JSON) of the response from the server}
 
 \item{sep}{a field separator character. Values on each line of the file are separated by this character. By default it is a semicolon ';'. The separator character is passed to the function read.csv.}
 
-\item{dec}{the character used in the file for decimal points. Default value is comma ','.}
-
 \item{header}{a logical value representing if the file contains variable names on its first line}
-
-\item{encoding}{encoding of the input strings. Default value is 'UTF-8'}
 }
 \value{
 Returns a data frame
