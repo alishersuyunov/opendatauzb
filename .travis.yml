@@ -9,6 +9,11 @@ addons:
     update: false
     packages:
       - clang++-6.0
+      - libstdc++6
       - g++-7
+
+  env:
+    - MATRIX_EVAL="CC=clang-6.0 && CXX=clang-6.0"
+    - LINKER_FLAGS="-stdlib=libstdc++"
 
 warnings_are_errors: false
