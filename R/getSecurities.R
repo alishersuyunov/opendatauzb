@@ -4,7 +4,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2 utils
+#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2 utils RcppSimdJson
 #'
 #' @return Returns a data frame
 #' @export
@@ -32,7 +32,7 @@ requestNames <- function(security_code) {
                   Referer = glue("https://uzse.uz"),
                   "Accept" = "application/json")) %>%
     content(type = "text", encoding = "UTF-8") %>%
-    fromJSON() %>%
+    fparse() %>%  #fromJSON() %>%
     as_tibble() %>%
     mutate(type = security_code) %>%
     return()

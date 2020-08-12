@@ -68,7 +68,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%
-  fromJSON(flatten = TRUE) %>%
+  fparse() %>% #fromJSON(flatten = TRUE) %>%
   `colnames<-`(c("date", "open_price", "high_price", "low_price", "price", "previous_day_price", "marketcap", "trading_volume", "trading_value")) %>%
   mutate(date = as_date(date)) %>%
   return()

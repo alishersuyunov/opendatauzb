@@ -8,6 +8,7 @@ library(opendatauzb)
 library(knitr)
 library(kableExtra)
 library(formattable)
+library(RcppSimdJson)
 
 ## ---- include = TRUE, eval=FALSE, warning=FALSE-------------------------------
 #  RegisteredSecurities()

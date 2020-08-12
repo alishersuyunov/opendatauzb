@@ -20,6 +20,7 @@ library(opendatauzb)
 library(knitr)
 library(kableExtra)
 library(formattable)
+library(RcppSimdJson)
 ```
 
 This vignette provides an overview of a practical use of **opendatauzb** package's functions to work with Uzbek Stock Market Data. Unlike stock markets in developed economies, there are few resources available in Uzbekistan that are machine-friendly and able to provide Uzbek stock market prices in machine-readable formats. With this R package, we overcome these data limitations and improve productivity of equity research analysts while evaluating Uzbek stocks.

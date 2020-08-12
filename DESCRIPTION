@@ -23,7 +23,8 @@ Imports:
     lubridate,
     tidyr,
     xml2,
-    textclean
+    textclean,
+    RcppSimdJson
 Suggests: 
     knitr,
     rmarkdown,
