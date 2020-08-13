@@ -15,5 +15,6 @@ addons:
     update: false
   packages:
     - gcc-7
+    - gcc++-7
 
 warnings_are_errors: false
