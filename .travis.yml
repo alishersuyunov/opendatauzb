@@ -7,14 +7,10 @@ language: R
 cache: packages
 
 before_install:
-  - mkdir -p ~/.R
-  - echo 'CXX17 = g++-7 -std=gnu++17 -fPIC' > ~/.R/Makevars
-
 addons:
   apt:
     update: false
   packages:
-    - gcc-7
-    - gcc++-7
+    - build-essential
 
 warnings_are_errors: false
