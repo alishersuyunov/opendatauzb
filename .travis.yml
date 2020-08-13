@@ -6,11 +6,17 @@ dist: focal
 language: R
 cache: packages
 
+jobs:
+  include:
+    - name: gcc-7
+      env: CXX11="g++-7" CXX17="g++-7" CC="gcc-7"
+
 before_install:
 addons:
   apt:
     update: false
   packages:
     - build-essential
+    - ${CXX17}
 
 warnings_are_errors: false
