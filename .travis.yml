@@ -10,23 +10,14 @@ env:
   global:
     - R_VERSION="4.0"
 
-jobs:
-  include:
-      - name: gcc-8
-        env: CXX11="g++-8" CXX17="g++-8" CC="gcc-8"
-
 before_install:
-  - sudo apt-get install ${CXX17}
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/${CC} 60 --slave /usr/bin/g++ g++ /usr/bin/${CXX17}
-  - g++ --version
+  r_binary_packages:
+    - RcppSimdJson
 
 addons:
   apt:
     update: true
   sources:
     - ubuntu-toolchain-r-test
-  packages:
-    - build-essential
-    - ${CXX17}
 
 warnings_are_errors: false
