@@ -10,10 +10,10 @@ env:
   global:
     - R_VERSION="4.0"
 
-before_install:
-  r_binary_packages:
+r_binary_packages:
     - RcppSimdJson
 
+before_install:
 addons:
   apt:
     update: true
