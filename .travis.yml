@@ -5,19 +5,15 @@ dist: focal
 
 language: r
 cache: packages
+sudo: required
 
 env:
   global:
     - R_VERSION="4.0"
 
-r_binary_packages:
-    - RcppSimdJson
-
 before_install:
 addons:
-  apt:
-    update: true
-  sources:
-    - ubuntu-toolchain-r-test
+  r_binary_packages:
+    - RcppSimdJson
 
 warnings_are_errors: false
