@@ -6,6 +6,10 @@ dist: bionic
 language: R
 sudo: required
 
+env:
+  global:
+    - R_VERSION="4.0"
+
 compiler:
   - clang
 
