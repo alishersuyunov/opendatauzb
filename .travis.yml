@@ -1,23 +1,29 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 os: linux
-dist: bionic
+dist: focal
 
 language: r
-sudo: required
+cache: packages
+
+before_install:
+addons:
+  apt:
+    update: true
+
+warnings_are_errors: false
 
 env:
   global:
     - R_VERSION="4.0"
 
-cache: packages
-
 jobs:
   include:
-      env: CXX11="g++-10" CXX17="g++-10" CC="gcc-10"
+      - name: gcc-7
+      env: CXX11="g++-7" CXX17="g++-7" CC="gcc-7"
 
 before_install:
-  - sudo apt-get install ${CXX17} r-cran-rcpp r-cran-bit64 r-cran-tinytest
+  - sudo apt-get install ${CXX17}
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/${CC} 60 --slave /usr/bin/g++ g++ /usr/bin/${CXX17}
   - g++ --version
 
