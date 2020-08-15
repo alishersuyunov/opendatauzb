@@ -15,5 +15,20 @@ before_install:
 addons:
   r_binary_packages:
     - RcppSimdJson
+    - dplyr
+    - purrr
+    - glue
+    - jsonlite
+    - httr
+    - assertive
+    - stringr
+    - utils
+    - readxl
+    - readr
+    - rvest
+    - lubridate
+    - tidyr
+    - xml2
+    - textclean
 
 warnings_are_errors: false
