@@ -6,13 +6,6 @@ dist: focal
 language: r
 cache: packages
 
-before_install:
-addons:
-  apt:
-    update: true
-
-warnings_are_errors: false
-
 env:
   global:
     - R_VERSION="4.0"
@@ -29,7 +22,7 @@ before_install:
 
 addons:
   apt:
-    update: false
+    update: true
   sources:
     - ubuntu-toolchain-r-test
   packages:
