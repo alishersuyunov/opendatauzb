@@ -5,30 +5,27 @@ dist: focal
 
 language: r
 cache: packages
-sudo: required
 
 env:
   global:
     - R_VERSION="4.0"
 
-before_install:
-addons:
-  r_binary_packages:
-    - RcppSimdJson
-    - dplyr
-    - purrr
-    - glue
-    - jsonlite
-    - httr
-    - assertive
-    - stringr
-    - utils
-    - readxl
-    - readr
-    - rvest
-    - lubridate
-    - tidyr
-    - xml2
-    - textclean
+r_binary_packages:
+  - RcppSimdJson
+  - dplyr
+  - purrr
+  - glue
+  - jsonlite
+  - httr
+  - assertive
+  - stringr
+  - utils
+  - readxl
+  - readr
+  - rvest
+  - lubridate
+  - tidyr
+  - xml2
+  - textclean
 
 warnings_are_errors: false
