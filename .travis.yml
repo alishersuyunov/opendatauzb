@@ -10,9 +10,9 @@ before_install:
        paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']),
        ')'))" >> ~/.Rprofile.site
 
-  addons:
-    apt:
-      update: false
+addons:
+  apt:
+    update: false
 
 
 warnings_are_errors: false
