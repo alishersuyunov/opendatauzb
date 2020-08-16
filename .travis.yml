@@ -4,6 +4,10 @@ dist: xenial
 language: r
 cache: packages
 
+env:
+  global:
+    - R_VERSION="4.0"
+
 before_install:
   - echo "options(repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/xenial/latest'))" >> ~/.Rprofile.site
   - echo "options(HTTPUserAgent = paste0('R/', getRversion(), ' R (',
@@ -13,6 +17,5 @@ before_install:
 addons:
   apt:
     update: false
-
 
 warnings_are_errors: false
