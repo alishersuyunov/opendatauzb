@@ -1,5 +1,4 @@
 os: linux
-dist: bionic
 
 language: r
 cache: packages
