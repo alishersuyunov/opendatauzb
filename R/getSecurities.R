@@ -28,7 +28,7 @@ getSecurities <- function() {
 requestNames <- function(security_code) {
   GET("https://uzse.uz/isu_infos/names",
       query = list(mkt_id = security_code),
-      add_headers("User-Agent" = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 OPR/68.0.3618.104",
+      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot",
                   Referer = glue("https://uzse.uz"),
                   "Accept" = "application/json")) %>%
     content(type = "text", encoding = "UTF-8") %>%

@@ -19,7 +19,7 @@
 #'  \dontrun{
 #'  getTicker("UZ7011340005")
 #'  getTicker("UZ7011340005", from = "01.01.2020", to = "01.05.2020")}
-getTicker <- function(symbol, from = "01.01.2019", to = "dd.mm.yyyy") {
+getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
 
   assert_is_a_non_missing_nor_empty_string(symbol)
 
@@ -40,7 +40,7 @@ getTicker <- function(symbol, from = "01.01.2019", to = "dd.mm.yyyy") {
   res_stock <- GET(
       glue("https://uzse.uz/isu_infos/{symbol}/conclusions.xlsx"),
       query = request_parameters,
-      add_headers("User-Agent" = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 OPR/68.0.3618.104",
+      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot",
                   Referer = glue("https://uzse.uz"),
                   "Accept-Encoding" = "gzip, deflate, br")
     )

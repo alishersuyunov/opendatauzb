@@ -58,7 +58,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
   res <- GET(
       "https://uzse.uz/price_indices/histories",
       query = request_parameters,
-      add_headers("User-Agent" = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 OPR/68.0.3618.104",
+      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
                   Referer = glue("https://uzse.uz/price_indices?idx_ind_cd={sector_code}"),
                   "Accept-Encoding" = "gzip, deflate, br",
                   "Accept" = 'application/json')
