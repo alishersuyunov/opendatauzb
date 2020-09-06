@@ -9,7 +9,17 @@ cache: packages
 env:
   global:
     - R_VERSION="4.0"
-    - R_CHECK_ARGS="--no-build-vignettes --ignore-vignettes"
+
+r_packages:
+    - knitr
+    - rmarkdown
+    - quantmod
+    - tidyverse
+    - PerformanceAnalytics
+    - tidyquant
+    - kableExtra
+    - formattable
+    - testthat
 
 before_install:
   - echo "options(repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/bionic/latest'))" >> ~/.Rprofile.site
@@ -22,3 +32,5 @@ addons:
     update: false
 
 warnings_are_errors: false
+
+r_check_args: "--no-build-vignettes --ignore-vignettes"
