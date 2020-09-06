@@ -24,8 +24,7 @@ Imports:
     tidyr,
     xml2,
     textclean,
-    RcppSimdJson
-Suggests: 
+    RcppSimdJson,
     knitr,
     rmarkdown,
     quantmod,
@@ -35,6 +34,7 @@ Suggests:
     kableExtra,
     formattable,
     testthat
+    
 VignetteBuilder: knitr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues

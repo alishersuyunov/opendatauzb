@@ -30,17 +30,6 @@ jobs:
     - name: gcc-10
       env: CXX11="g++-10" CXX17="g++-10" CC="gcc-10"
 
-r_packages:
-    - knitr
-    - rmarkdown
-    - quantmod
-    - tidyverse
-    - PerformanceAnalytics
-    - tidyquant
-    - kableExtra
-    - formattable
-    - testthat
-
 before_install:
   - echo "options(repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/bionic/latest'))" >> ~/.Rprofile.site
   - echo "options(HTTPUserAgent = paste0('R/', getRversion(), ' R (',
