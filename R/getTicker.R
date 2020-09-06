@@ -40,7 +40,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
   res_stock <- GET(
       glue("https://uzse.uz/isu_infos/{symbol}/conclusions.xlsx"),
       query = request_parameters,
-      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot",
+      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
                   Referer = glue("https://uzse.uz"),
                   "Accept-Encoding" = "gzip, deflate, br")
     )

@@ -1,6 +1,7 @@
 os: linux
+dist: bionic
 
-import: eddelbuettel/rcppsimdjson:.travis.yml@75521ac
+import: eddelbuettel/rcppsimdjson:.travis.yml@dbcca363036368d99c8334b889ca01e8785d8a03
 
 language: r
 cache: packages
