@@ -17,6 +17,9 @@ addons:
 
 warnings_are_errors: false
 
+r_packages:
+    - knitr
+
 r_check_args: "--no-build-vignettes --ignore-vignettes"
 
 jobs:

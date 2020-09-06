@@ -10,7 +10,6 @@
 #' @author Alisher Suyunov
 #'
 #' @import dplyr jsonlite httr assertive stringr glue readr
-#' @importFrom glue glue
 #' @return Returns a data frame
 #' @export
 #'

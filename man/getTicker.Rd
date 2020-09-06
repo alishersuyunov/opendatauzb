@@ -4,7 +4,7 @@
 \alias{getTicker}
 \title{Downloading Stock Market Data}
 \usage{
-getTicker(symbol, from = "01.01.2019", to = "dd.mm.yyyy")
+getTicker(symbol, from = "01.01.2020", to = "dd.mm.yyyy")
 }
 \arguments{
 \item{symbol}{A unique identifier of the security (e.g. UZ7011340005). Note: Don't confuse with ISIN code}
