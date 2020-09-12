@@ -8,7 +8,7 @@ library(opendatauzb)
 library(knitr)
 library(kableExtra)
 library(formattable)
-library(RcppSimdJson)
+#library(RcppSimdJson)
 
 ## ---- include = TRUE, eval=FALSE, warning=FALSE-------------------------------
 #  RegisteredSecurities()
@@ -99,4 +99,29 @@ Rb <- getMarketIndex("all") %>%
 ## ---- echo = FALSE, include = TRUE, warning=FALSE-----------------------------
 Rb %>% head(6) %>% kable() %>% kable_styling()
 RaRb <- left_join(Ra, Rb, by = c("Date" = "date"))
+
+## ---- echo=TRUE, warning=FALSE, message=FALSE---------------------------------
+RaRb_capm <- RaRb %>%
+  tq_performance(Ra = Ra,
+                 Rb = Rb,
+                 Rf = 0.15,
+                 performance_fun = table.CAPM)
+
+## ---- echo = FALSE, include = TRUE, warning=FALSE-----------------------------
+RaRb_capm %>% 
+  select(1:3,5, 10, 12, 13) %>%
+  kable() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+## ---- echo=TRUE, warning=FALSE, message=FALSE---------------------------------
+RaRb %>%
+  tq_performance(Ra = Ra,
+    Rb = NULL,
+    performance_fun = SharpeRatio,
+    Rf = 0.15) %>% 
+  formattable(list("ESSharpe(Rf=15%,p=95%)" = formatter("span", 
+                                                        style = x ~ ifelse(x >= 3, 
+                                                                           style(color = "green", 
+                                                                                 font.weight = "bold"), 
+                                                                           NA))))
 
