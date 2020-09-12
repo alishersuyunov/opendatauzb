@@ -21,7 +21,7 @@
 #'  getMarketIndex(sector = "finance", from = "01.01.2020", to = "01.05.2020")}
 getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture",
                                       "construction", "social", "transport", "trade", "other"),
-                           from = "01.01.2019",
+                           from = "01.01.2020",
                            to = "dd.mm.yyyy") {
 
   from <- str_trim(from)
@@ -68,9 +68,9 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%
-  fparse() %>% #fromJSON(flatten = TRUE) %>%
+  fromJSON(flatten = TRUE) %>% #fparse() %>%
   `colnames<-`(c("date", "open_price", "high_price", "low_price", "price", "previous_day_price", "marketcap", "trading_volume", "trading_value")) %>%
-  mutate(date = as_date(date)) %>%
+  mutate(date = as_date(date)) %>% arrange(date) %>%
   return()
 }
 

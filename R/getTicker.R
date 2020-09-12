@@ -49,8 +49,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
   temp_downloaded_stock <- tempfile(fileext = ".xlsx")
   content(res_stock, type = "raw") %>% writeBin(temp_downloaded_stock)
 
-  historical_data <- read_excel(temp_downloaded_stock) %>% mutate(symbol = symbol)
-  historical_data$Date <- as_date(historical_data$Date, format = "%d.%m.%Y")
+  historical_data <- read_excel(temp_downloaded_stock) %>% mutate(symbol = symbol, Date = as_date(Date, format = "%d.%m.%Y")) %>% arrange(Date)
   unlink(temp_downloaded_stock)
   rm(temp_downloaded_stock)
 
