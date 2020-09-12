@@ -7,7 +7,14 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr purrr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive textclean
+#' @import httr dplyr lubridate tidyr textclean
+#'
+#' @importFrom rvest html_table
+#' @importFrom purrr map_df
+#' @importFrom glue glue
+#' @importFrom stringr str_trim
+#' @importFrom xml2 read_html
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -18,15 +25,15 @@
 #'  \dontrun{
 #'  currentBidsAsks()}
 currentBidsAsks <- function(security_code = "", security_type = "STK") {
-  security_type <- str_trim(security_type)
-  security_code <- str_trim(security_code)
+  security_type <- stringr::str_trim(security_type)
+  security_code <- stringr::str_trim(security_code)
 
-  glue('https://uzse.uz/asking_prices?ord_dd={today() %>% format(format = "%d.%m.%Y")}&mkt_id={security_type}&isu_cd={security_code}') %>%
+  glue::glue('https://uzse.uz/asking_prices?ord_dd={today() %>% format(format = "%d.%m.%Y")}&mkt_id={security_type}&isu_cd={security_code}') %>%
     GET() %>%
     content(type = "text", encoding = "UTF-8") %>%
-    read_html() %>%
-    html_table() %>% .[[1]] %>%
-    map_df(replace_html) %>%
-    map_df(replace_white) %>%
+    xml2::read_html() %>%
+    rvest::html_table() %>% .[[1]] %>%
+    purrr::map_df(replace_html) %>%
+    purrr::map_df(replace_white) %>%
     return()
 }

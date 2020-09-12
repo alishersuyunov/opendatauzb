@@ -6,7 +6,12 @@
 #'
 #' @param id Numeric or String Numeric. An identifier of the organisation/authority providing the dataset
 #'
-#' @import dplyr jsonlite httr assertive stringr glue
+#' @import dplyr
+#'
+#' @importFrom glue glue
+#' @importFrom jsonlite fromJSON
+#' @importFrom assertive assert_any_are_numeric_strings
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -19,22 +24,23 @@
 #'  availableDatasets_by_source(143) }
 availableDatasets <- function() {
   formRequest("dataset") %>%
-    fromJSON(flatten = TRUE) %>%
+    jsonlite::fromJSON(flatten = TRUE) %>%
     return()
 }
 
 #' @describeIn availableDatasets Obtains the list of available datasets published by particular organisation/authority
 #' @export
 availableDatasets_by_source <- function(id) {
-  assert_any_are_numeric_strings(id, severity = "stop")
-  glue("organization/{id}/dataset") %>%
+  assertive::assert_any_are_numeric_strings(id, severity = "stop")
+
+  glue::glue("organization/{id}/dataset") %>%
     formRequest() %>%
-    fromJSON(flatten = TRUE)
+    jsonlite::fromJSON(flatten = TRUE)
 }
 
 #' @describeIn availableDatasets Obtains the list of available datasources - organisations
 #' @export
 availableDataSources <- function() {
   formRequest("organization") %>%
-    fromJSON(flatten = TRUE)
+    jsonlite::fromJSON(flatten = TRUE)
 }

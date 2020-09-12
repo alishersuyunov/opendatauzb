@@ -1,7 +1,7 @@
 Package: opendatauzb
 Type: Package
-Title: Downloading available datasets from an official open data source of Uzbekistan and Uzbek Stock Market Data
-Version: 0.1.1
+Title: Downloading available datasets and Uzbek Stock Market Data from an official open data source of Uzbekistan 
+Version: 0.1.2
 Authors@R: person("Alisher", "Suyunov", email = "alisher.c@yandex.com",
                   role = c("aut", "cre"))
 Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz} - and Uzbek Stock Market Data from \url{uzse.uz}

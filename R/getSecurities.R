@@ -4,7 +4,10 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2 utils
+#' @import httr dplyr tidyr
+#'
+#' @importFrom jsonlite fromJSON
+#' @importFrom glue glue
 #'
 #' @return Returns a data frame
 #' @export
@@ -20,7 +23,7 @@ getSecurities <- function() {
     as_tibble() %>%
     select(4, 1:3)
 
-  message(glue("{nrow(sct_list)} securities are found. Out of which are:"))
+  message(glue::glue("{nrow(sct_list)} securities are found. Out of which are:"))
   message(paste0(capture.output(sct_list %>% group_by(Type) %>% count()), collapse = "\n"))
 
   return(sct_list)
@@ -30,10 +33,10 @@ requestNames <- function(security_code) {
   GET("https://uzse.uz/isu_infos/names",
       query = list(mkt_id = security_code),
       add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
-                  Referer = glue("https://uzse.uz"),
+                  Referer = "https://uzse.uz",
                   "Accept" = "application/json")) %>%
     content(type = "text", encoding = "UTF-8") %>%
-    fromJSON() %>% #fparse() %>%
+    jsonlite::fromJSON() %>% #fparse() %>%
     as_tibble() %>%
     mutate(type = security_code) %>%
     return()

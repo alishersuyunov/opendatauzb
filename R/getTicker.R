@@ -8,7 +8,12 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2
+#' @import httr readxl rvest dplyr lubridate tidyr jsonlite
+#'
+#' @importFrom glue glue
+#' @importFrom assertive assert_is_a_non_missing_nor_empty_string
+#' @importFrom stringr str_trim
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -21,11 +26,11 @@
 #'  getTicker("UZ7011340005", from = "01.01.2020", to = "01.05.2020")}
 getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
 
-  assert_is_a_non_missing_nor_empty_string(symbol)
+  assertive::assert_is_a_non_missing_nor_empty_string(symbol)
 
-  symbol <- str_trim(symbol)
-  from <- str_trim(from)
-  to <- str_trim(to)
+  symbol <- stringr::str_trim(symbol)
+  from <- stringr::str_trim(from)
+  to <- stringr::str_trim(to)
 
   if(to == "dd.mm.yyyy") {
     to <- today() %>% format(format = "%d.%m.%Y")
@@ -38,10 +43,10 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
                              end_date = to)
 
   res_stock <- GET(
-      glue("https://uzse.uz/isu_infos/{symbol}/conclusions.xlsx"),
+      glue::glue("https://uzse.uz/isu_infos/{symbol}/conclusions.xlsx"),
       query = request_parameters,
       add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
-                  Referer = glue("https://uzse.uz"),
+                  Referer = glue::glue("https://uzse.uz"),
                   "Accept-Encoding" = "gzip, deflate, br")
     )
 
@@ -53,7 +58,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
   unlink(temp_downloaded_stock)
   rm(temp_downloaded_stock)
 
-  message(glue("{symbol} has been downloaded for {from}-{to}"))
+  message(glue::glue("{symbol} has been downloaded for {from}-{to}"))
 
   return(historical_data)
   }

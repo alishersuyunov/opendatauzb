@@ -4,7 +4,10 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2
+#' @import dplyr tidyr
+#' @importFrom xml2 read_html
+#' @importFrom rvest xml_nodes html_table
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -12,10 +15,11 @@
 #'  \dontrun{
 #'  RegisteredSecurities()}
 RegisteredSecurities <- function(){
-  read_html("http://www.deponet.uz/cgi-bin/asb_all.cgi") %>%
-    xml_nodes("table") %>%
+  xml2::read_html("http://www.deponet.uz/cgi-bin/asb_all.cgi") %>%
+    rvest::xml_nodes("table") %>%
     .[7] %>%
-    html_table() %>%
+    rvest::html_table() %>%
     .[[1]] %>%
+    `colnames<-`(c("Issuer", "SecurityCode", "ISIN", "CFI", "last_update")) %>%
     return()
 }

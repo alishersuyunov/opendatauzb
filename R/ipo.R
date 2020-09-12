@@ -7,7 +7,14 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2
+#' @import httr readxl dplyr lubridate tidyr jsonlite
+#'
+#' @importFrom glue glue
+#' @importFrom assertive assert_is_a_number
+#' @importFrom xml2 read_html
+#' @importFrom rvest html_table
+#' @importFrom stringr str_trim str_replace_all
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -17,14 +24,14 @@
 #'  ipo(plus_n_years = 2)}
 ipo <- function(key = "", plus_n_years = 1) {
 
-  assert_is_a_number(plus_n_years)
+  assertive::assert_is_a_number(plus_n_years)
 
-  glue('https://uzse.uz/ipos?search_key={key}&search_date={as.character(format(today() + years(plus_n_years), "%d.%m.%Y"))}') %>%
-    read_html() %>%
-    html_table() %>%
+  glue::glue('https://uzse.uz/ipos?search_key={key}&search_date={as.character(format(today() + years(plus_n_years), "%d.%m.%Y"))}') %>%
+    xml2::read_html() %>%
+    rvest::html_table() %>%
     .[[1]] %>%
     select(-"", Code = 2) %>%
     separate(Code, c("Code", "Title"), sep = "\n") %>%
-    mutate(Code = str_replace_all(Code, "[[:punct:]]", " "), Title = str_trim(Title)) %>%
+    mutate(Code = stringr::str_replace_all(Code, "[[:punct:]]", " "), Title = stringr::str_trim(Title)) %>%
     return()
 }

@@ -8,7 +8,12 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr glue lubridate tidyr stringr jsonlite assertive xml2
+#' @import httr readxl dplyr lubridate tidyr jsonlite xml2
+#'
+#' @importFrom assertive assert_is_a_non_missing_nor_empty_string is_true are_intersecting_sets
+#' @importFrom stringr str_trim str_to_lower str_to_sentence
+#' @importFrom glue glue
+#'
 #' @return Returns a data frame
 #' @export
 #'
@@ -24,22 +29,22 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
                            from = "01.01.2020",
                            to = "dd.mm.yyyy") {
 
-  from <- str_trim(from)
-  to <- str_trim(to)
+  from <- stringr::str_trim(from)
+  to <- stringr::str_trim(to)
 
   if (to == "dd.mm.yyyy") {
     to <- today() %>% format(format = "%d.%m.%Y")
   }
 
-  assert_is_a_non_missing_nor_empty_string(sector)
+  assertive::assert_is_a_non_missing_nor_empty_string(sector)
 
   checkDateFormat(from)
   checkDateFormat(to)
 
-  are_intersecting_sets(tolower(str_trim(sector)),
+  assertive::are_intersecting_sets(stringr::str_to_lower(stringr::str_trim(sector)),
                         c("all", "finance", "industry", "agriculture", "construction", "social", "transport", "trade", "other"))
 
-  sector_code <- switch(tolower(str_trim(sector)),
+  sector_code <- switch(stringr::str_to_lower(stringr::str_trim(sector)),
          "all" = "001",
          "finance" = "002",
          "industry" = "003",
@@ -59,12 +64,12 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
       "https://uzse.uz/price_indices/histories",
       query = request_parameters,
       add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
-                  Referer = glue("https://uzse.uz/price_indices?idx_ind_cd={sector_code}"),
+                  Referer = glue::glue("https://uzse.uz/price_indices?idx_ind_cd={sector_code}"),
                   "Accept-Encoding" = "gzip, deflate, br",
                   "Accept" = 'application/json')
     )
 
-  glue("Uzbekistan Composite Index (Sector: {str_to_sentence(sector)}) will be downloaded for {from}-{to}") %>%
+  glue::glue("Uzbekistan Composite Index (Sector: {stringr::str_to_sentence(sector)}) will be downloaded for {from}-{to}") %>%
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%
@@ -75,7 +80,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
 }
 
 checkDateFormat <- function(dt) {
-  if(is_true(guess_formats(dt, "d0my") == "%d.%Om.%Y" || guess_formats(dt, "d0my") == "%d.%m.%Y")) {
+  if(assertive::is_true(lubridate::guess_formats(dt, "d0my") == "%d.%Om.%Y" || guess_formats(dt, "d0my") == "%d.%m.%Y")) {
     return(TRUE)
   } else stop("Please state 'from' (or 'to') date in %d.%m.%Y format e.g. '22.12.2020'")
 }

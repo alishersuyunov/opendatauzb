@@ -8,7 +8,7 @@ library(opendatauzb)
 library(knitr)
 library(kableExtra)
 library(formattable)
-library(RcppSimdJson)
+#library(RcppSimdJson)
 
 ## ---- include = TRUE, eval=FALSE, warning=FALSE-------------------------------
 #  RegisteredSecurities()
@@ -73,11 +73,11 @@ asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000",
                  "UZ7028090007", "UZ701134K017", "UZ7011340005", "UZ701655K011", "UZ7016550004")
 
 assets <- asset_group %>%
-  lapply(getTicker) %>%
+  lapply(getTicker, from = "01.01.2019", to = "12.08.2020") %>%
   bind_rows()
 
 ## ---- include = TRUE, warning=FALSE-------------------------------------------
-Ra <- assets %>%
+Ra <- assets %>% 
   group_by(symbol) %>%
   tq_transmute(select     = "Closed Price",
                mutate_fun = periodReturn,
@@ -90,7 +90,7 @@ kable(head(Ra, n = 6)) %>%
 
 ## ---- echo=TRUE, warning=FALSE------------------------------------------------
 # Baseline prices
-Rb <- getMarketIndex("all") %>%
+Rb <- getMarketIndex("all", from = "01.01.2019", to = "12.08.2020")  %>%
   tq_transmute(select     = price,
                mutate_fun = periodReturn,
                period     = "monthly",

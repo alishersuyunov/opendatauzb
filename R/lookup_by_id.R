@@ -6,7 +6,11 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import dplyr jsonlite httr assertive
+#' @import dplyr
+#'
+#' @importFrom assertive assert_any_are_numeric_strings
+#' @importFrom jsonlite fromJSON
+#'
 #' @return Returns a character
 #' @export
 #'
@@ -15,8 +19,9 @@
 #'  lookup_by_id(7)}
 
 lookup_by_id <- function(id){
-  assert_any_are_numeric_strings(as.character(id), severity = "stop")
+  assertive::assert_any_are_numeric_strings(as.character(id), severity = "stop")
   formRequest(paste0("dataset/", id)) %>%
-    fromJSON(flatten = TRUE) %>% # GET() %>% content("text") %>% fparse() %>%
+    jsonlite::fromJSON(flatten = TRUE) %>% # GET() %>% content("text") %>% fparse() %>%
     .[['title']] %>%
-    return() }
+    return()
+  }
