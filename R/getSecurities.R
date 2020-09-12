@@ -17,6 +17,7 @@ getSecurities <- function() {
     lapply(requestNames) %>%
     bind_rows() %>%
     `colnames<-`(c("SecurityCode", "Ticker", "Issuer", "Type")) %>%
+    as_tibble() %>%
     select(4, 1:3)
 
   message(glue("{nrow(sct_list)} securities are found. Out of which are:"))
