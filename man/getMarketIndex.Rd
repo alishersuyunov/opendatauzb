@@ -7,7 +7,7 @@
 getMarketIndex(
   sector = c("all", "finance", "industry", "agriculture", "construction", "social",
     "transport", "trade", "other"),
-  from = "01.01.2019",
+  from = "01.01.2020",
   to = "dd.mm.yyyy"
 )
 }

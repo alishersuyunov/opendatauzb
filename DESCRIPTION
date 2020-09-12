@@ -24,7 +24,6 @@ Imports:
     tidyr,
     xml2,
     textclean,
-    RcppSimdJson,
     knitr,
     rmarkdown,
     quantmod,
