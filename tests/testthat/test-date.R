@@ -1,11 +1,6 @@
 library("opendatauzb")
 context("Date and Class checks")
 
-# test_that("Date", {
-#   expect_equal(TRUE, TRUE)
-# })
-
-
 test_that("Date is processed properly", {
   expect_error(getTicker("UZ7011340005",
                          from = "2020-01-01",
@@ -27,4 +22,3 @@ test_that("Returned objects are correct", {
   expect_s3_class(currentBidsAsks(), "data.frame")
   expect_s3_class(ipo(), "data.frame")
 })
-

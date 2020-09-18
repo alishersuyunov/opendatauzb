@@ -2,7 +2,7 @@
 
 [![Travis build status](https://travis-ci.com/alishersuyunov/opendatauzb.svg?branch=master)](https://travis-ci.com/alishersuyunov/opendatauzb)
 
-Downloading available datasets and Uzbek Stock Market data from an official open data sources of Uzbekistan 
+Downloading available datasets and Uzbek Stock Market data from official open data sources of Uzbekistan 
 
 ## RELEASE NOTES:
 - Version 0.1.2 improves performance, optimises dependencies; output data frames are sorted by design
@@ -25,9 +25,9 @@ Please refer to [vignette documentation](https://gitcdn.xyz/repo/alishersuyunov/
 `browseVignettes("opendatauzb")`<br>
 `vignette("opendatauzb", package = "opendatauzb")`
 
-<br><br>
+<br>
 
-The 0.1.1 version of the package has three key functions:
+The 0.1.1 version offers three key functions:
 
 * `availableDatasets()` - returns a data frame with the list of available datasets on https://data.gov.uz with corresponding **dataset_id**
 * `getData(dataset_id)` - downloads a dataset with **dataset_id**
@@ -38,7 +38,7 @@ Execute the following code to install the R package from R environment:
 `devtools::install_github("alishersuyunov/opendatauzb)`<br>
 `remotes::install_github("alishersuyunov/opendatauzb)`<br>
 
-To download and install using pre-compiled binary files, please refer to the [releases](https://github.com/alishersuyunov/opendatauzb/tree/master/releases) folder.
+To download and install using pre-compiled binary files, please go to [releases](https://github.com/alishersuyunov/opendatauzb/tree/master/releases) folder.
 
 ## License
 The package is provided under the GPL-3 license.

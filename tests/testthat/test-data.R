@@ -15,7 +15,7 @@ test_that("Stock Data Structure", {
                              colnames(readRDS("sample_dataset_KVTS.RDS")))
 })
 
-# test_that("Securities Structure", {
-#   testthat::expect_identical(colnames(getSecurities()),
-#                              c("Type", "SecurityCode", "Ticker", "Issuer"))
-# })
+test_that("Securities Structure", {
+  testthat::expect_identical(colnames(getSecurities()),
+                             c("Type", "SecurityCode", "Ticker", "Issuer"))
+})

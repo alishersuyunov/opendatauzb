@@ -21,5 +21,6 @@ RegisteredSecurities <- function(){
     rvest::html_table() %>%
     .[[1]] %>%
     `colnames<-`(c("Issuer", "SecurityCode", "ISIN", "CFI", "last_update")) %>%
+    mutate(last_update = as.Date(last_update, format = "%d-%m-%Y")) %>%
     return()
 }

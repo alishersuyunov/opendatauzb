@@ -8,6 +8,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom glue glue
+#' @importFrom utils capture.output
 #'
 #' @return Returns a data frame
 #' @export
@@ -19,12 +20,12 @@ getSecurities <- function() {
   sct_list <- c("STK", "BND", "RPO", "FCT") %>%
     lapply(requestNames) %>%
     bind_rows() %>%
-    `colnames<-`(c("SecurityCode", "Ticker", "Issuer", "Type")) %>%
     as_tibble() %>%
+    `colnames<-`(c("SecurityCode", "Ticker", "Issuer", "Type")) %>%
     select(4, 1:3)
 
   message(glue::glue("{nrow(sct_list)} securities are found. Out of which are:"))
-  message(paste0(capture.output(sct_list %>% group_by(Type) %>% count()), collapse = "\n"))
+  message(paste0(utils::capture.output(sct_list %>% group_by(Type) %>% count()), collapse = "\n"))
 
   return(sct_list)
 }
@@ -36,8 +37,8 @@ requestNames <- function(security_code) {
                   Referer = "https://uzse.uz",
                   "Accept" = "application/json")) %>%
     content(type = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON() %>% #fparse() %>%
-    as_tibble() %>%
+    jsonlite::fromJSON(simplifyDataFrame = TRUE) %>% #fparse() %>%
+    as.data.frame() %>%
     mutate(type = security_code) %>%
     return()
 }

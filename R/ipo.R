@@ -25,6 +25,7 @@
 ipo <- function(key = "", plus_n_years = 1) {
 
   assertive::assert_is_a_number(plus_n_years)
+  key <- as.character(key)
 
   glue::glue('https://uzse.uz/ipos?search_key={key}&search_date={as.character(format(today() + years(plus_n_years), "%d.%m.%Y"))}') %>%
     xml2::read_html() %>%

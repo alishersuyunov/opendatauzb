@@ -31,6 +31,7 @@
 #'  getData_dictionary(7)
 #'  getData_history(7) }
 getData <- function(id, format = "csv", sep = ";") {
+  id <- as.character(id)
   assertive::assert_any_are_numeric_strings(id, severity = "stop")
 
   if(format == "csv") {
@@ -38,14 +39,16 @@ getData <- function(id, format = "csv", sep = ";") {
              delim = stringr::fixed(sep),
              col_names = FALSE) %>% return()
   } else if(format == "json") {
-    glue::glue("https://data.gov.uz/ru/datasets/download/{id}/{format}") %>% jsonlite::fromJSON() %>% return()
+    glue::glue("https://data.gov.uz/ru/datasets/download/{id}/{format}") %>% GET() %>% content("text") %>% jsonlite::fromJSON() %>% return()
   }
 }
 
 #' @describeIn getData Downloads a dataset dictionary (variables) for the datasets
 #' @export
 getData_dictionary <- function(id, sep = ";", header = FALSE) {
+    id <- as.character(id)
     assertive::assert_any_are_numeric_strings(id, severity = "stop")
+
     glue::glue("https://data.gov.uz/ru/convert/download/{id}?ext=csv") %>%
     readr::read_delim(delim = stringr::fixed(sep), col_names = header) %>%
     return()
@@ -54,9 +57,12 @@ getData_dictionary <- function(id, sep = ";", header = FALSE) {
 #' @describeIn getData Obtains a data frame with dataset history containing publication date and version
 #' @export
 getData_history <- function(id) {
+  id <- as.character(id)
   assertive::assert_any_are_numeric_strings(id, severity = "stop")
   glue::glue("dataset/{id}/version") %>%
     formRequest() %>%
+    GET() %>%
+    content("text") %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
     arrange(publication_date) %>%
     return()
@@ -64,11 +70,16 @@ getData_history <- function(id) {
 
 #' @keywords internal
 getData_by_version <- function(id, version) {
+  id <- as.character(id)
+  version <- as.character(version)
+
   assertive::assert_any_are_numeric_strings(id, severity = "stop")
   assertive::assert_any_are_numeric_strings(version, severity = "stop")
 
   glue::glue("dataset/{id}/version/{version}") %>%
     formRequest() %>%
+    GET() %>%
+    content("text") %>%
     jsonlite::fromJSON() %>%
     return()
 }
