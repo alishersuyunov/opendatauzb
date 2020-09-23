@@ -8,7 +8,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl dplyr lubridate tidyr jsonlite xml2
+#' @import httr readxl dplyr lubridate tidyr jsonlite xml2 crayon
 #'
 #' @importFrom assertive assert_is_a_non_missing_nor_empty_string is_true are_intersecting_sets
 #' @importFrom stringr str_trim str_to_lower str_to_sentence
@@ -70,6 +70,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
     )
 
   glue::glue("Uzbekistan Composite Index (Sector: {stringr::str_to_sentence(sector)}) will be downloaded for {from}-{to}") %>%
+    green() %>%
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%

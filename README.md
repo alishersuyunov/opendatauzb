@@ -9,7 +9,7 @@ Downloading available datasets and Uzbek Stock Market data from official open da
 - Version 0.1.1 offers several new functions to download Uzbek Stock Market data along with a vignette documentation
 - First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](http://data.gov.uz)
 
-In the latest version (0.1.1), several new functions have been added to collect Uzbek Stock Market data. 
+In version (0.1.1), several new functions were added to collect Uzbek Stock Market data. 
 
 * `getTicker()`: obtains stock market prices over the given period 
 * `getMarketIndex()`: provides stock market indices across sectors
@@ -20,7 +20,7 @@ In the latest version (0.1.1), several new functions have been added to collect 
 
 <br>
 
-Please refer to [vignette documentation](https://gitcdn.xyz/repo/alishersuyunov/opendatauzb/master/doc/opendatauzb.html) for additional examples:<br>
+Please refer to [vignette documentation](https://rawcdn.githack.com/alishersuyunov/opendatauzb/ce29711e66deeb9852b14b808bdf722c63c94c61/vignettes/opendatauzb.html) for additional examples:<br>
 
 `browseVignettes("opendatauzb")`<br>
 `vignette("opendatauzb", package = "opendatauzb")`

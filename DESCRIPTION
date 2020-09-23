@@ -32,7 +32,8 @@ Imports:
     tidyquant,
     kableExtra,
     formattable,
-    testthat
+    testthat,
+    crayon
 VignetteBuilder: knitr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues

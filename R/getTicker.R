@@ -8,7 +8,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr lubridate tidyr jsonlite
+#' @import httr readxl rvest dplyr lubridate tidyr jsonlite crayon
 #'
 #' @importFrom glue glue
 #' @importFrom assertive assert_is_a_non_missing_nor_empty_string
@@ -58,7 +58,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
   unlink(temp_downloaded_stock)
   rm(temp_downloaded_stock)
 
-  message(glue::glue("{symbol} has been downloaded for {from}-{to}"))
+  glue::glue("{symbol} has been downloaded for {from}-{to}") %>% green() %>% message()
 
   return(historical_data)
   }

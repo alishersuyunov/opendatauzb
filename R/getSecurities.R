@@ -4,7 +4,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr dplyr tidyr
+#' @import httr dplyr tidyr crayon
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom glue glue
@@ -24,8 +24,8 @@ getSecurities <- function() {
     `colnames<-`(c("SecurityCode", "Ticker", "Issuer", "Type")) %>%
     select(4, 1:3)
 
-  message(glue::glue("{nrow(sct_list)} securities are found. Out of which are:"))
-  message(paste0(utils::capture.output(sct_list %>% group_by(Type) %>% count()), collapse = "\n"))
+  message(green(glue::glue("{nrow(sct_list)} securities are found. Out of which are:")))
+  message(blue(paste0(utils::capture.output(sct_list %>% group_by(Type) %>% count() %>% arrange(desc(n))), collapse = "\n")))
 
   return(sct_list)
 }
