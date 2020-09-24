@@ -58,7 +58,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
   unlink(temp_downloaded_stock)
   rm(temp_downloaded_stock)
 
-  glue::glue("{symbol} has been downloaded for {from}-{to}") %>% green() %>% message()
+  glue::glue("{symbol} has been downloaded for {from}-{to}") %>% crayon::green() %>% message()
 
   return(historical_data)
   }

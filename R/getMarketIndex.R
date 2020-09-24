@@ -70,7 +70,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
     )
 
   glue::glue("Uzbekistan Composite Index (Sector: {stringr::str_to_sentence(sector)}) will be downloaded for {from}-{to}") %>%
-    green() %>%
+    crayon::green() %>%
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%

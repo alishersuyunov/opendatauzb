@@ -24,8 +24,8 @@ getSecurities <- function() {
     `colnames<-`(c("SecurityCode", "Ticker", "Issuer", "Type")) %>%
     select(4, 1:3)
 
-  message(green(glue::glue("{nrow(sct_list)} securities are found. Out of which are:")))
-  message(blue(paste0(utils::capture.output(sct_list %>% group_by(Type) %>% count() %>% arrange(desc(n))), collapse = "\n")))
+  message(crayon::green(glue::glue("{nrow(sct_list)} securities are found. Out of which are:")))
+  message(crayon::blue(paste0(utils::capture.output(sct_list %>% group_by(Type) %>% count() %>% arrange(desc(n))), collapse = "\n")))
 
   return(sct_list)
 }
