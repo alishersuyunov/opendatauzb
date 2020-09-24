@@ -20,7 +20,6 @@ library(opendatauzb)
 library(knitr)
 library(kableExtra)
 library(formattable)
-library(crayon)
 #library(RcppSimdJson)
 ```
 
