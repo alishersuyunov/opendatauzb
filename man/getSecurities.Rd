@@ -10,7 +10,7 @@ getSecurities()
 Returns a data frame
 }
 \description{
-Returns a data frame with the list of securities from the Republican Stock Exchange "Toshkent" database
+Returns a data frame with the list of securities in the Republican Stock Exchange "Toshkent" database
 }
 \examples{
  \dontrun{

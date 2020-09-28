@@ -7,7 +7,7 @@
 getTicker(symbol, from = "01.01.2020", to = "dd.mm.yyyy")
 }
 \arguments{
-\item{symbol}{A unique identifier of the security (e.g. UZ7011340005). Note: Don't confuse with ISIN code}
+\item{symbol}{An unique identifier of the security (e.g. UZ7011340005 or HMKB) or a character vector/list of multiple securities. Note: Don't confuse with ISIN code}
 
 \item{from}{A string representing the start date of the period of interest in date.month.year date format}
 

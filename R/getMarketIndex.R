@@ -42,42 +42,42 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
   checkDateFormat(to)
 
   assertive::are_intersecting_sets(stringr::str_to_lower(stringr::str_trim(sector)),
-                        c("all", "finance", "industry", "agriculture", "construction", "social", "transport", "trade", "other"))
+                                   c("all", "finance", "industry", "agriculture", "construction", "social", "transport", "trade", "other"))
 
   sector_code <- switch(stringr::str_to_lower(stringr::str_trim(sector)),
-         "all" = "001",
-         "finance" = "002",
-         "industry" = "003",
-         "agriculture" = "004",
-         "construction" = "005",
-         "social" = "006",
-         "transport" = "007",
-         "trade" = "008",
-         "other" = "009" #, "tci" = "tcis"
-         )
+                        "all" = "001",
+                        "finance" = "002",
+                        "industry" = "003",
+                        "agriculture" = "004",
+                        "construction" = "005",
+                        "social" = "006",
+                        "transport" = "007",
+                        "trade" = "008",
+                        "other" = "009" #, "tci" = "tcis"
+  )
 
   request_parameters <- list(ind_idx_cd = sector_code,
                              begin_date = from,
                              end_date = to)
 
   res <- GET(
-      "https://uzse.uz/price_indices/histories",
-      query = request_parameters,
-      add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
-                  Referer = glue::glue("https://uzse.uz/price_indices?idx_ind_cd={sector_code}"),
-                  "Accept-Encoding" = "gzip, deflate, br",
-                  "Accept" = 'application/json')
-    )
+    "https://uzse.uz/price_indices/histories",
+    query = request_parameters,
+    add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
+                Referer = glue::glue("https://uzse.uz/price_indices?idx_ind_cd={sector_code}"),
+                "Accept-Encoding" = "gzip, deflate, br",
+                "Accept" = 'application/json')
+  )
 
   glue::glue("Uzbekistan Composite Index (Sector: {stringr::str_to_sentence(sector)}) will be downloaded for {from}-{to}") %>%
     crayon::green() %>%
     message()
 
   content(res, as = "text", type = "raw", encoding = "UTF-8") %>%
-  fromJSON(flatten = TRUE) %>% #fparse() %>%
-  `colnames<-`(c("date", "open_price", "high_price", "low_price", "price", "previous_day_price", "marketcap", "trading_volume", "trading_value")) %>%
-  mutate(date = as_date(date)) %>% arrange(date) %>%
-  return()
+    fromJSON(flatten = TRUE) %>% #fparse() %>%
+    `colnames<-`(c("date", "open_price", "high_price", "low_price", "price", "previous_day_price", "marketcap", "trading_volume", "trading_value")) %>%
+    mutate(date = as_date(date)) %>% arrange(date) %>%
+    return()
 }
 
 checkDateFormat <- function(dt) {

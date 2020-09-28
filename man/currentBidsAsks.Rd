@@ -7,7 +7,7 @@
 currentBidsAsks(security_code = "", security_type = "STK")
 }
 \arguments{
-\item{security_code}{A unique identifier of the security (e.g. UZ7011340005). Note: Don't confuse with ISIN code}
+\item{security_code}{An unique identifier of the security (e.g. UZ7011340005 or HMKB). Note: Don't confuse with ISIN code}
 
 \item{security_type}{A string that indicates the type of the security: "STK" for stocks, "BND" for bonds, "RPO" for Repeat Public Offering, "FCT" for}
 }

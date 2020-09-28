@@ -36,8 +36,8 @@ getData <- function(id, format = "csv", sep = ";") {
 
   if(format == "csv") {
     readr::read_delim(glue::glue("https://data.gov.uz/ru/datasets/download/{id}/{format}"),
-             delim = stringr::fixed(sep),
-             col_names = FALSE) %>% return()
+                      delim = stringr::fixed(sep),
+                      col_names = FALSE) %>% return()
   } else if(format == "json") {
     glue::glue("https://data.gov.uz/ru/datasets/download/{id}/{format}") %>% GET() %>% content("text") %>% jsonlite::fromJSON() %>% return()
   }
@@ -46,10 +46,10 @@ getData <- function(id, format = "csv", sep = ";") {
 #' @describeIn getData Downloads a dataset dictionary (variables) for the datasets
 #' @export
 getData_dictionary <- function(id, sep = ";", header = FALSE) {
-    id <- as.character(id)
-    assertive::assert_any_are_numeric_strings(id, severity = "stop")
+  id <- as.character(id)
+  assertive::assert_any_are_numeric_strings(id, severity = "stop")
 
-    glue::glue("https://data.gov.uz/ru/convert/download/{id}?ext=csv") %>%
+  glue::glue("https://data.gov.uz/ru/convert/download/{id}?ext=csv") %>%
     readr::read_delim(delim = stringr::fixed(sep), col_names = header) %>%
     return()
 }
@@ -59,6 +59,7 @@ getData_dictionary <- function(id, sep = ";", header = FALSE) {
 getData_history <- function(id) {
   id <- as.character(id)
   assertive::assert_any_are_numeric_strings(id, severity = "stop")
+
   glue::glue("dataset/{id}/version") %>%
     formRequest() %>%
     GET() %>%

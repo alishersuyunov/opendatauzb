@@ -1,6 +1,6 @@
 #'  Downloading the securities listed on the Republican Stock Exchange "Toshkent"
 #'
-#'  Returns a data frame with the list of securities from the Republican Stock Exchange "Toshkent" database
+#'  Returns a data frame with the list of securities in the Republican Stock Exchange "Toshkent" database
 #'
 #' @author Alisher Suyunov
 #'
@@ -9,6 +9,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom glue glue
 #' @importFrom utils capture.output
+#' @importFrom stringr str_length
 #'
 #' @return Returns a data frame
 #' @export
@@ -41,4 +42,18 @@ requestNames <- function(security_code) {
     as.data.frame() %>%
     mutate(type = security_code) %>%
     return()
+}
+
+requestTicker <- function(security_code, type = "STK") {
+  assertive::assert_is_a_non_empty_string(security_code)
+  assertive::assert_is_a_non_empty_string(type)
+
+  requestNames(type) %>% filter(V1 == security_code) %>% .[2] %>% as.character() %>% return()
+}
+
+requestSecurityCode <- function(ticker, type = "STK") {
+  assertive::assert_is_a_non_empty_string(ticker)
+  assertive::assert_is_a_non_empty_string(type)
+
+  requestNames(type) %>% filter(V2 == toupper(ticker)) %>% .[1] %>% as.character() %>% return()
 }

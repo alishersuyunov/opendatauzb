@@ -72,9 +72,7 @@ asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000",
                  "UZ7004510002", "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
                  "UZ7028090007", "UZ701134K017", "UZ7011340005", "UZ701655K011", "UZ7016550004")
 
-assets <- asset_group %>%
-  lapply(getTicker, from = "01.01.2019", to = "12.08.2020") %>%
-  bind_rows()
+assets <- asset_group %>% getTicker(from = "01.01.2019", to = "12.08.2020")
 
 ## ---- include = TRUE, warning=FALSE-------------------------------------------
 Ra <- assets %>% 

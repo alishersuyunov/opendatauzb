@@ -137,7 +137,7 @@ getTicker("UZ7011340005",
 
 For this example, we use **opendatauzb** package's functions and other packages (```quantmod```, ```PerformanceAnalytics```, ```tidyquant```) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including **Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino** and others.
 
-Using ```getTicker``` function, we download stock prices for each of those stocks. **Note**: if arguments *from* and *to* are not provided, by default, both ```getMarketIndex()``` and ```getTicker()``` functions download stock prices starting from 01.01.2019.
+Using ```getTicker``` function, we download stock prices for each of those stocks. **Note**: if arguments *from* and *to* are not provided, by default, both ```getMarketIndex()``` and ```getTicker()``` functions download stock prices from 01.01.2019 to 12.08.2020.
 
 ```{r, include = TRUE, warning=FALSE, message=FALSE}
 asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000", "UZ7025770007",
@@ -145,12 +145,10 @@ asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000",
                  "UZ7004510002", "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
                  "UZ7028090007", "UZ701134K017", "UZ7011340005", "UZ701655K011", "UZ7016550004")
 
-assets <- asset_group %>%
-  lapply(getTicker, from = "01.01.2019", to = "12.08.2020") %>%
-  bind_rows()
+assets <- asset_group %>% getTicker(from = "01.01.2019", to = "12.08.2020")
 ```
 
-Having loaded stock prices, we calculate monthly returns using a ```tidyquant::tq_transmute()``` function from ```tidyquant``` package. Please refer to the [link](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html) for more information on using ```tidyquant``` package.
+Having loaded stock prices, we calculate monthly returns using a ```tidyquant::tq_transmute()``` function from ```tidyquant``` package. Please refer to the [Tidyquant vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html) for information on using ```tidyquant``` package.
 
 As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating [adjusted closing prices](https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html). 
 

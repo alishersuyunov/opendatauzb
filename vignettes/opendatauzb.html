@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alisher Suyunov" />
 
-<meta name="date" content="2020-09-24" />
+<meta name="date" content="2020-09-28" />
 
 <title>Introduction to Uzbek Stock Market Data with opendatauzb package</title>
 
@@ -514,7 +514,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to Uzbek Stock Market Data with <em>opendatauzb</em> package</h1>
 <h4 class="author">Alisher Suyunov</h4>
-<h4 class="date">2020-09-24</h4>
+<h4 class="date">2020-09-28</h4>
 
 
 
@@ -560,7 +560,7 @@ UZ0000000CY7
 ESXXXR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -577,7 +577,7 @@ UZ0000000CQ3
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -594,7 +594,7 @@ UZ0000000C74
 EPXXXR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -611,7 +611,7 @@ UZ0000000C82
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -628,7 +628,7 @@ UZ0000000FA0
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -645,7 +645,7 @@ UZ0000000BY9
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -662,7 +662,7 @@ UZ00000004P2
 EPXXXR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -679,7 +679,7 @@ UZ00000004Q0
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -696,7 +696,7 @@ UZ00000001V6
 ESXXXR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 <tr>
@@ -713,7 +713,7 @@ UZ0000000BJ0
 ESXXFR
 </td>
 <td style="text-align:left;">
-2020-09-24
+2020-09-28
 </td>
 </tr>
 </tbody>
@@ -723,14 +723,14 @@ ESXXFR
 <h2>getSecurities(): Download the securities listed on the Republican Stock Exchange “Toshkent”</h2>
 <p><code>opendatauzb::getSecurities()</code> provides a data frame with the list of securities from <a href="www.uzse.uz">the Republican Stock Exchange “Toshkent” database</a></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">getSecurities</span>()</span></code></pre></div>
-<pre><code>## 5123 securities are found. Out of which are:</code></pre>
+<pre><code>## 5124 securities are found. Out of which are:</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ## # Groups:   Type [4]
 ##   Type      n
 ##   &lt;chr&gt; &lt;int&gt;
 ## 1 RPO    4439
 ## 2 FCT     492
-## 3 STK     181
+## 3 STK     182
 ## 4 BND      11</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -1396,74 +1396,22 @@ STK
 G1
 </td>
 <td style="text-align:left;">
-UZ7001560000 AGBA
-</td>
-<td style="text-align:left;">
-ATB
-</td>
-<td style="text-align:left;">
-UZS 800
-</td>
-<td style="text-align:left;">
-461 662
-</td>
-<td style="text-align:left;">
-UZS 0
-</td>
-<td style="text-align:left;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-STK
-</td>
-<td style="text-align:left;">
-G1
-</td>
-<td style="text-align:left;">
-UZ7004510002 KUMZ
+UZ7016530006 ATSZ
 </td>
 <td style="text-align:left;">
 AJ
 </td>
 <td style="text-align:left;">
-UZS 939,99
+UZS 10 999,99
 </td>
 <td style="text-align:left;">
-11 936
+223
 </td>
 <td style="text-align:left;">
-UZS 850
+UZS 8 000
 </td>
 <td style="text-align:left;">
-1 500
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-STK
-</td>
-<td style="text-align:left;">
-G1
-</td>
-<td style="text-align:left;">
-UZ7011340005 HMKB
-</td>
-<td style="text-align:left;">
-ATB
-</td>
-<td style="text-align:left;">
-UZS 26,89
-</td>
-<td style="text-align:left;">
-229 460
-</td>
-<td style="text-align:left;">
-UZS 24,7
-</td>
-<td style="text-align:left;">
-158 420
+4
 </td>
 </tr>
 <tr>
@@ -1474,22 +1422,48 @@ STK
 G1
 </td>
 <td style="text-align:left;">
-UZ7016550004 KYEZ
+UZ7017850007 UGYM
 </td>
 <td style="text-align:left;">
-XII AJ
+AJ
 </td>
 <td style="text-align:left;">
-UZS 1 887,99
+UZS 5 999,99
 </td>
 <td style="text-align:left;">
-1 701
+228
 </td>
 <td style="text-align:left;">
-UZS 1 301,01
+UZS 4 601
 </td>
 <td style="text-align:left;">
-36
+429
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+UZ7021720006 UZMK
+</td>
+<td style="text-align:left;">
+AJ
+</td>
+<td style="text-align:left;">
+UZS 26 300,4
+</td>
+<td style="text-align:left;">
+4 253
+</td>
+<td style="text-align:left;">
+UZS 24 701
+</td>
+<td style="text-align:left;">
+2 743
 </td>
 </tr>
 <tr>
@@ -1506,16 +1480,68 @@ UZ7025770007 KVTS
 AJ
 </td>
 <td style="text-align:left;">
-UZS 3 000
+UZS 3 019
 </td>
 <td style="text-align:left;">
-48 158
+29 635
 </td>
 <td style="text-align:left;">
-UZS 2 950,01
+UZS 2 920
 </td>
 <td style="text-align:left;">
-20 914
+13 400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+UZ7029000005 QZSM
+</td>
+<td style="text-align:left;">
+AJ
+</td>
+<td style="text-align:left;">
+UZS 1 800
+</td>
+<td style="text-align:left;">
+9 198
+</td>
+<td style="text-align:left;">
+UZS 1 753
+</td>
+<td style="text-align:left;">
+22 689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STK
+</td>
+<td style="text-align:left;">
+G1
+</td>
+<td style="text-align:left;">
+UZ7033480003 TRSB
+</td>
+<td style="text-align:left;">
+XAB
+</td>
+<td style="text-align:left;">
+UZS 6 500
+</td>
+<td style="text-align:left;">
+2 219
+</td>
+<td style="text-align:left;">
+UZS 0
+</td>
+<td style="text-align:left;">
+0
 </td>
 </tr>
 <tr>
@@ -1532,42 +1558,16 @@ UZ7043200003 URTS
 AJ
 </td>
 <td style="text-align:left;">
-UZS 6 250
+UZS 6 300
 </td>
 <td style="text-align:left;">
-168 906
+169 273
 </td>
 <td style="text-align:left;">
-UZS 6 201
+UZS 6 260
 </td>
 <td style="text-align:left;">
-21 611
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-STK
-</td>
-<td style="text-align:left;">
-G1
-</td>
-<td style="text-align:left;">
-UZ7045280003 JIPL
-</td>
-<td style="text-align:left;">
-AJ
-</td>
-<td style="text-align:left;">
-UZS 3 500
-</td>
-<td style="text-align:left;">
-20 586
-</td>
-<td style="text-align:left;">
-UZS 3 450
-</td>
-<td style="text-align:left;">
-3 600
+16 855
 </td>
 </tr>
 <tr>
@@ -1578,22 +1578,22 @@ STK
 G1
 </td>
 <td style="text-align:left;">
-UZ705457K018 IPTB1
+UZ704711K019 UZTL1
 </td>
 <td style="text-align:left;">
-ATIB
+AK
 </td>
 <td style="text-align:left;">
-UZS 2,24
+UZS 0
 </td>
 <td style="text-align:left;">
-11 025 694
+0
 </td>
 <td style="text-align:left;">
-UZS 1,75
+UZS 1 700
 </td>
 <td style="text-align:left;">
-750 000
+798
 </td>
 </tr>
 <tr>
@@ -1636,16 +1636,16 @@ UZ700055K015 AGM1
 AJ
 </td>
 <td style="text-align:left;">
-UZS 13 550
+UZS 13 347,99
 </td>
 <td style="text-align:left;">
-1 401
+708
 </td>
 <td style="text-align:left;">
 UZS 12 000
 </td>
 <td style="text-align:left;">
-162
+67
 </td>
 </tr>
 </tbody>
@@ -1668,7 +1668,7 @@ UZS 12 000
 <li>other</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">getMarketIndex</span>(<span class="dt">sector =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
-<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2020-24.09.2020</code></pre>
+<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2020-28.09.2020</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2333,7 +2333,7 @@ trading_value
 <pre><code>## New names:
 ## * `` -&gt; ...9
 ## * `` -&gt; ...10</code></pre>
-<pre><code>## UZ7011340005 has been downloaded for 01.01.2020-24.09.2020</code></pre>
+<pre><code>## UZ7011340005 has been downloaded for 01.01.2020-28.09.2020</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2994,16 +2994,14 @@ UZ7011340005
 <div id="creating-a-data-frame-with-stock-prices" class="section level2">
 <h2>Creating a data frame with stock prices</h2>
 <p>For this example, we use <strong>opendatauzb</strong> package’s functions and other packages (<code>quantmod</code>, <code>PerformanceAnalytics</code>, <code>tidyquant</code>) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including <strong>Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino</strong> and others.</p>
-<p>Using <code>getTicker</code> function, we download stock prices for each of those stocks. <strong>Note</strong>: if arguments <em>from</em> and <em>to</em> are not provided, by default, both <code>getMarketIndex()</code> and <code>getTicker()</code> functions download stock prices starting from 01.01.2019.</p>
+<p>Using <code>getTicker</code> function, we download stock prices for each of those stocks. <strong>Note</strong>: if arguments <em>from</em> and <em>to</em> are not provided, by default, both <code>getMarketIndex()</code> and <code>getTicker()</code> functions download stock prices from 01.01.2019 to 12.08.2020.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>asset_group &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;UZ704532K019&quot;</span>, <span class="st">&quot;UZ7045320007&quot;</span>, <span class="st">&quot;UZ7025870005&quot;</span>, <span class="st">&quot;UZ7038380000&quot;</span>, <span class="st">&quot;UZ7025770007&quot;</span>,</span>
 <span id="cb15-2"><a href="#cb15-2"></a>                 <span class="st">&quot;UZ7015030008&quot;</span>, <span class="st">&quot;UZ7043200003&quot;</span>, <span class="st">&quot;UZ703756K015&quot;</span>, <span class="st">&quot;UZ7037560008&quot;</span>, <span class="st">&quot;UZ7016400002&quot;</span>,</span>
 <span id="cb15-3"><a href="#cb15-3"></a>                 <span class="st">&quot;UZ7004510002&quot;</span>, <span class="st">&quot;UZ7023760000&quot;</span>, <span class="st">&quot;UZ703348K011&quot;</span>, <span class="st">&quot;UZ7033480003&quot;</span>, <span class="st">&quot;UZ7035340007&quot;</span>,</span>
 <span id="cb15-4"><a href="#cb15-4"></a>                 <span class="st">&quot;UZ7028090007&quot;</span>, <span class="st">&quot;UZ701134K017&quot;</span>, <span class="st">&quot;UZ7011340005&quot;</span>, <span class="st">&quot;UZ701655K011&quot;</span>, <span class="st">&quot;UZ7016550004&quot;</span>)</span>
 <span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a>assets &lt;-<span class="st"> </span>asset_group <span class="op">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="st">  </span><span class="kw">lapply</span>(getTicker, <span class="dt">from =</span> <span class="st">&quot;01.01.2019&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;12.08.2020&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span></code></pre></div>
-<p>Having loaded stock prices, we calculate monthly returns using a <code>tidyquant::tq_transmute()</code> function from <code>tidyquant</code> package. Please refer to the <a href="https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html">link</a> for more information on using <code>tidyquant</code> package.</p>
+<span id="cb15-6"><a href="#cb15-6"></a>assets &lt;-<span class="st"> </span>asset_group <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">getTicker</span>(<span class="dt">from =</span> <span class="st">&quot;01.01.2019&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;12.08.2020&quot;</span>)</span></code></pre></div>
+<p>Having loaded stock prices, we calculate monthly returns using a <code>tidyquant::tq_transmute()</code> function from <code>tidyquant</code> package. Please refer to the <a href="https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html">Tidyquant vignette</a> for information on using <code>tidyquant</code> package.</p>
 <p>As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating <a href="https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html">adjusted closing prices</a>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Ra &lt;-<span class="st"> </span>assets <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">group_by</span>(symbol) <span class="op">%&gt;%</span></span>

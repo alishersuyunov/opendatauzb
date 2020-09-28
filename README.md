@@ -1,10 +1,11 @@
-# opendatauzb 0.1.2
+# opendatauzb 0.1.3
 
 [![Travis build status](https://travis-ci.com/alishersuyunov/opendatauzb.svg?branch=master)](https://travis-ci.com/alishersuyunov/opendatauzb)
 
 Downloading available datasets and Uzbek Stock Market data from official open data sources of Uzbekistan 
 
 ## RELEASE NOTES:
+- Version 0.1.3 offers support of a vector/list of multiple securities in `getTicker()` function; now, `getTicker` accepts both security code ("UZ7048610008") and ticker ("RBQB") to download stock prices.
 - Version 0.1.2 improves performance, optimises dependencies; output data frames are sorted by design
 - Version 0.1.1 offers several new functions to download Uzbek Stock Market data along with a vignette documentation
 - First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](http://data.gov.uz)
