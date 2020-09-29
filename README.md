@@ -7,10 +7,10 @@ Downloading available datasets and Uzbek Stock Market data from official open da
 ## RELEASE NOTES:
 - Version 0.1.3 offers support of a vector/list of multiple securities in `getTicker()` function; now, `getTicker` accepts both security code ("UZ7048610008") and ticker ("RBQB") to download stock prices.
 - Version 0.1.2 improves performance, optimises dependencies; output data frames are sorted by design
-- Version 0.1.1 offers several new functions to download Uzbek Stock Market data along with a vignette documentation
+- Version 0.1.1 introduces several new functions to download Uzbek Stock Market data along with a vignette documentation
 - First release 0.1.0 provides a set of functions to access datasets on [the Official Open Data Portal of Uzbekistan](http://data.gov.uz)
 
-In version (0.1.1), several new functions were added to collect Uzbek Stock Market data. 
+Version (0.1.1) introduces several new functions for collecting Uzbek Stock Market data. 
 
 * `getTicker()`: obtains stock market prices over the given period 
 * `getMarketIndex()`: provides stock market indices across sectors
@@ -28,7 +28,7 @@ Please refer to [vignette documentation](https://rawcdn.githack.com/alishersuyun
 
 <br>
 
-The 0.1.1 version offers three key functions:
+The 0.1.0 version offers three key functions:
 
 * `availableDatasets()` - returns a data frame with the list of available datasets on https://data.gov.uz with corresponding **dataset_id**
 * `getData(dataset_id)` - downloads a dataset with **dataset_id**
