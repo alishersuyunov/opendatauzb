@@ -81,7 +81,7 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
 }
 
 checkDateFormat <- function(dt) {
-  if(assertive::is_true(lubridate::guess_formats(dt, "d0my") == "%d.%Om.%Y" || guess_formats(dt, "d0my") == "%d.%m.%Y")) {
+  if(assertive::is_true(lubridate::guess_formats(dt, "d0my") == "%d.%Om.%Y" || lubridate::guess_formats(dt, "d0my") == "%d.%m.%Y")) {
     return(TRUE)
-  } else stop("Please state 'from' (or 'to') date in %d.%m.%Y format e.g. '22.12.2020'")
+  } else stop("Please state 'from' (or 'to') date in %d.%m.%Y format (e.g. '22.12.2020')")
 }
