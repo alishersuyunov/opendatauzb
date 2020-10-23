@@ -51,12 +51,15 @@ get_FX <- function(currency = c("USD", "EUR"), from = "01-10-2020", to = "dd-mm-
 
   crayon::green(paste("Downloading", currency, "exchange rates (UzRCE) from", from, "to", to)) %>% message()
 
-  req <- glue::glue("http://uzrvb.uz/ru/trades-archive?",
-                    "ExchangeVolatility%5Btype%5D={type}&",
-                    "ExchangeVolatility%5Bexchange_tool_id%5D={exchange_tool_id}&",
-                    "ExchangeVolatility%5Bcreated_at%5D={created_at}&",
-                    "ExchangeVolatility%5Bend_date%5D={end_date}") %>%
-    GET(add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)"))
+
+
+  req <- glue::glue("http://uzrvb.uz/en/category/arhiv-kursov?",
+                    "ExchangeVolatilitySearch%5Btype%5D={type}&",
+                    "ExchangeVolatilitySearch%5Bexchange_tool_id%5D={exchange_tool_id}&",
+                    "ExchangeVolatilitySearch%5Bcreated_at%5D={created_at}&",
+                    "ExchangeVolatilitySearch%5Bend_date%5D={end_date}") %>%
+    GET(add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
+                    "referrer" = "http://uzrvb.uz/ru/category/arhiv-kursov"))
 
   pages <- content(req) %>% xml_node(css = "#w1 > ul > li.last") %>% xml_contents() %>% xml_attr("data-page") %>% as.numeric() + 1
 
@@ -65,8 +68,9 @@ get_FX <- function(currency = c("USD", "EUR"), from = "01-10-2020", to = "dd-mm-
   full <- purrr::map(1:pages, function(page_id) {
     GET(req$url, query = list(page = page_id)) %>%
       content() %>%
+      html_nodes(css = ".result_table") %>%
       html_table(fill = TRUE) %>%
-      .[[12]] %>%
+      .[[1]] %>%
       return()
   })
 
