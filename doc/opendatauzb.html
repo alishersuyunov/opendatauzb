@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alisher Suyunov" />
 
-<meta name="date" content="2020-09-12" />
+<meta name="date" content="2020-10-24" />
 
 <title>Introduction to Uzbek Stock Market Data with opendatauzb package</title>
 
@@ -30,6 +30,45 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   }
+});
+</script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
 });
 </script>
 <script>$(document).ready(function(){
@@ -71,9 +110,16 @@ background-color: #f5f5f5;
 }
 .lightable-classic {
 border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
 width: 100%;
 margin-bottom: 10px;
 margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
 }
 .lightable-classic caption {
 color: #222222;
@@ -92,9 +138,6 @@ color: #222222;
 .lightable-classic thead tr:last-child th {
 border-bottom: 0.10em solid #111111;
 }
-.lightable-classic tbody tr:last-child td {
-border-bottom: 0.14em solid #111111;
-}
 .lightable-classic.lightable-hover tbody tr:hover {
 background-color: #F9EEC1;
 }
@@ -103,8 +146,15 @@ background-color: #f5f5f5;
 }
 .lightable-classic-2 {
 border-top: 3px double #111111;
+border-bottom: 3px double #111111;
 width: 100%;
 margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
 }
 .lightable-classic-2 caption {
 color: #222222;
@@ -141,6 +191,12 @@ border: 1px solid #EEE;
 border-collapse: collapse;
 margin-bottom: 10px;
 }
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
 .lightable-material th {
 height: 56px;
 padding-left: 16px;
@@ -174,6 +230,12 @@ border-collapse: collapse;
 margin-bottom: 10px;
 background-color: #363640;
 }
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
 .lightable-material-dark th {
 height: 56px;
 padding-left: 16px;
@@ -204,6 +266,12 @@ width: 100%;
 margin-bottom: 10px;
 color: #444;
 }
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
 .lightable-paper thead tr:last-child th {
 color: #666;
 vertical-align: bottom;
@@ -227,6 +295,15 @@ background-color: #00000008;
 border: 0;
 }
 </style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -514,7 +591,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to Uzbek Stock Market Data with <em>opendatauzb</em> package</h1>
 <h4 class="author">Alisher Suyunov</h4>
-<h4 class="date">2020-09-12</h4>
+<h4 class="date">2020-10-24</h4>
 
 
 
@@ -560,7 +637,7 @@ UZ0000000CY7
 ESXXXR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -577,7 +654,7 @@ UZ0000000CQ3
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -594,7 +671,7 @@ UZ0000000C74
 EPXXXR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -611,7 +688,7 @@ UZ0000000C82
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -628,7 +705,7 @@ UZ0000000FA0
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -645,7 +722,7 @@ UZ0000000BY9
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -662,7 +739,7 @@ UZ00000004P2
 EPXXXR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -679,7 +756,7 @@ UZ00000004Q0
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -696,7 +773,7 @@ UZ00000001V6
 ESXXXR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 <tr>
@@ -713,7 +790,7 @@ UZ0000000BJ0
 ESXXFR
 </td>
 <td style="text-align:left;">
-11-09-2020
+2020-10-23
 </td>
 </tr>
 </tbody>
@@ -723,15 +800,15 @@ ESXXFR
 <h2>getSecurities(): Download the securities listed on the Republican Stock Exchange “Toshkent”</h2>
 <p><code>opendatauzb::getSecurities()</code> provides a data frame with the list of securities from <a href="www.uzse.uz">the Republican Stock Exchange “Toshkent” database</a></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">getSecurities</span>()</span></code></pre></div>
-<pre><code>## 5106 securities are found. Out of which are:</code></pre>
+<pre><code>## 5165 securities are found. Out of which are:</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ## # Groups:   Type [4]
 ##   Type      n
 ##   &lt;chr&gt; &lt;int&gt;
-## 1 BND      11
+## 1 RPO    4474
 ## 2 FCT     492
-## 3 RPO    4425
-## 4 STK     178</code></pre>
+## 3 STK     188
+## 4 BND      11</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -943,48 +1020,7 @@ Title
 <tbody>
 <tr>
 <td style="text-align:left;">
-55
-</td>
-<td style="text-align:left;">
-UZ7038450001
-</td>
-<td style="text-align:left;">
-UZPARTA’MINOT AJ
-</td>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-28.08.2020
-</td>
-<td style="text-align:left;">
-11.09.2020
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-UZS
-</td>
-<td style="text-align:left;">
-31640,81
-</td>
-<td style="text-align:left;">
-100 (%)
-</td>
-<td style="text-align:left;">
-403 200
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-16.09.2020
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-56
+80
 </td>
 <td style="text-align:left;">
 UZ7030550006
@@ -996,10 +1032,10 @@ Asaka yog’ AJ
 N
 </td>
 <td style="text-align:left;">
-02.09.2020
+14.10.2020
 </td>
 <td style="text-align:left;">
-16.09.2020
+28.10.2020
 </td>
 <td style="text-align:right;">
 1
@@ -1008,7 +1044,7 @@ N
 UZS
 </td>
 <td style="text-align:left;">
-9001,87
+7001,45
 </td>
 <td style="text-align:left;">
 100 (%)
@@ -1020,176 +1056,12 @@ UZS
 0
 </td>
 <td style="text-align:left;">
-21.09.2020
+02.11.2020
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-57
-</td>
-<td style="text-align:left;">
-UZ7026620003
-</td>
-<td style="text-align:left;">
-Farg’ona yog’-moy AJ
-</td>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-07.09.2020
-</td>
-<td style="text-align:left;">
-21.09.2020
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-UZS
-</td>
-<td style="text-align:left;">
-28117,18
-</td>
-<td style="text-align:left;">
-100 (%)
-</td>
-<td style="text-align:left;">
-3 095 500
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-24.09.2020
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-58
-</td>
-<td style="text-align:left;">
-UZ702662K016
-</td>
-<td style="text-align:left;">
-Farg’ona yog’-moy AJ
-</td>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-07.09.2020
-</td>
-<td style="text-align:left;">
-21.09.2020
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-UZS
-</td>
-<td style="text-align:left;">
-28117,18
-</td>
-<td style="text-align:left;">
-100 (%)
-</td>
-<td style="text-align:left;">
-1 504
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-24.09.2020
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-59
-</td>
-<td style="text-align:left;">
-UZ7005950009
-</td>
-<td style="text-align:left;">
-JSC Uzpartamponaj
-</td>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-07.09.2020
-</td>
-<td style="text-align:left;">
-21.09.2020
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-UZS
-</td>
-<td style="text-align:left;">
-5387,88
-</td>
-<td style="text-align:left;">
-100 (%)
-</td>
-<td style="text-align:left;">
-3 041 090
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-24.09.2020
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-60
-</td>
-<td style="text-align:left;">
-UZ7032740001
-</td>
-<td style="text-align:left;">
-Buxoro ta’mirlash mexanika zavodi AJ
-</td>
-<td style="text-align:left;">
-N
-</td>
-<td style="text-align:left;">
-07.09.2020
-</td>
-<td style="text-align:left;">
-21.09.2020
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-UZS
-</td>
-<td style="text-align:left;">
-12859,20
-</td>
-<td style="text-align:left;">
-100 (%)
-</td>
-<td style="text-align:left;">
-1 891 785
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-24.09.2020
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-61
+81
 </td>
 <td style="text-align:left;">
 UZ7032730002
@@ -1201,10 +1073,10 @@ O’ZPARAVTOTRANS AJ
 N
 </td>
 <td style="text-align:left;">
-07.09.2020
+19.10.2020
 </td>
 <td style="text-align:left;">
-07.10.2020
+18.11.2020
 </td>
 <td style="text-align:right;">
 1
@@ -1225,27 +1097,27 @@ UZS
 0
 </td>
 <td style="text-align:left;">
-12.10.2020
+23.11.2020
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-62
+82
 </td>
 <td style="text-align:left;">
-UZ7017850007
+UZ7018290005
 </td>
 <td style="text-align:left;">
-URGANCH YOG’-MOY AJ
+QO’QON YOG’-MOY AJ
 </td>
 <td style="text-align:left;">
 N
 </td>
 <td style="text-align:left;">
-09.09.2020
+19.10.2020
 </td>
 <td style="text-align:left;">
-23.09.2020
+30.10.2020
 </td>
 <td style="text-align:right;">
 1
@@ -1254,39 +1126,39 @@ N
 UZS
 </td>
 <td style="text-align:left;">
-8279,20
+46067,90
 </td>
 <td style="text-align:left;">
 100 (%)
 </td>
 <td style="text-align:left;">
-18 645 786
+710 170
 </td>
 <td style="text-align:left;">
 0
 </td>
 <td style="text-align:left;">
-28.09.2020
+04.11.2020
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-63
+83
 </td>
 <td style="text-align:left;">
-UZ7018260008
+UZ7026620003
 </td>
 <td style="text-align:left;">
-Buxoroparranda AJ
+Farg’ona yog’-moy AJ
 </td>
 <td style="text-align:left;">
 N
 </td>
 <td style="text-align:left;">
-10.09.2020
+20.10.2020
 </td>
 <td style="text-align:left;">
-29.09.2020
+02.11.2020
 </td>
 <td style="text-align:right;">
 1
@@ -1295,24 +1167,106 @@ N
 UZS
 </td>
 <td style="text-align:left;">
-13136,92
+20083,78
 </td>
 <td style="text-align:left;">
 100 (%)
 </td>
 <td style="text-align:left;">
-459 630
+3 095 500
 </td>
 <td style="text-align:left;">
 0
 </td>
 <td style="text-align:left;">
-05.10.2020
+05.11.2020
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-64
+84
+</td>
+<td style="text-align:left;">
+UZ702662K016
+</td>
+<td style="text-align:left;">
+Farg’ona yog’-moy AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+20.10.2020
+</td>
+<td style="text-align:left;">
+02.11.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+20083,78
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+1 504
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+05.11.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+85
+</td>
+<td style="text-align:left;">
+UZ7017940006
+</td>
+<td style="text-align:left;">
+YOG’GAR JSC
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+20.10.2020
+</td>
+<td style="text-align:left;">
+03.11.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+10198,40
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+2 900 640
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+06.11.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+86
 </td>
 <td style="text-align:left;">
 UZ7036030003
@@ -1324,10 +1278,10 @@ ANDIJONYOG’MOY AJ
 N
 </td>
 <td style="text-align:left;">
-11.09.2020
+26.10.2020
 </td>
 <td style="text-align:left;">
-25.09.2020
+09.11.2020
 </td>
 <td style="text-align:right;">
 1
@@ -1336,7 +1290,7 @@ N
 UZS
 </td>
 <td style="text-align:left;">
-137054,18
+106597,70
 </td>
 <td style="text-align:left;">
 100 (%)
@@ -1348,7 +1302,130 @@ UZS
 0
 </td>
 <td style="text-align:left;">
-30.09.2020
+12.11.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+87
+</td>
+<td style="text-align:left;">
+UZ7017850007
+</td>
+<td style="text-align:left;">
+URGANCH YOG’-MOY AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+23.10.2020
+</td>
+<td style="text-align:left;">
+06.11.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+6209,40
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+18 645 786
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+11.11.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+88
+</td>
+<td style="text-align:left;">
+UZ7005950009
+</td>
+<td style="text-align:left;">
+JSC Uzpartamponaj
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+23.10.2020
+</td>
+<td style="text-align:left;">
+06.11.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+4040,91
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+3 041 090
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+11.11.2020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+89
+</td>
+<td style="text-align:left;">
+UZ7032740001
+</td>
+<td style="text-align:left;">
+Buxoro ta’mirlash mexanika zavodi AJ
+</td>
+<td style="text-align:left;">
+N
+</td>
+<td style="text-align:left;">
+23.10.2020
+</td>
+<td style="text-align:left;">
+06.11.2020
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UZS
+</td>
+<td style="text-align:left;">
+9646,40
+</td>
+<td style="text-align:left;">
+100 (%)
+</td>
+<td style="text-align:left;">
+1 891 785
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+11.11.2020
 </td>
 </tr>
 </tbody>
@@ -1410,7 +1487,7 @@ UZS
 <li>other</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">getMarketIndex</span>(<span class="dt">sector =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
-<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2020-12.09.2020</code></pre>
+<pre><code>## Uzbekistan Composite Index (Sector: All) will be downloaded for 01.01.2020-24.10.2020</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2075,7 +2152,7 @@ trading_value
 <pre><code>## New names:
 ## * `` -&gt; ...9
 ## * `` -&gt; ...10</code></pre>
-<pre><code>## UZ7011340005 has been downloaded for 01.01.2020-12.09.2020</code></pre>
+<pre><code>## UZ7011340005 has been downloaded for 01.01.2020-24.10.2020</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2736,16 +2813,14 @@ UZ7011340005
 <div id="creating-a-data-frame-with-stock-prices" class="section level2">
 <h2>Creating a data frame with stock prices</h2>
 <p>For this example, we use <strong>opendatauzb</strong> package’s functions and other packages (<code>quantmod</code>, <code>PerformanceAnalytics</code>, <code>tidyquant</code>) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including <strong>Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino</strong> and others.</p>
-<p>Using <code>getTicker</code> function, we download stock prices for each of those stocks. <strong>Note</strong>: if arguments <em>from</em> and <em>to</em> are not provided, by default, both <code>getMarketIndex()</code> and <code>getTicker()</code> functions download stock prices starting from 01.01.2019.</p>
+<p>Using <code>getTicker</code> function, we download stock prices for each of those stocks. <strong>Note</strong>: if arguments <em>from</em> and <em>to</em> are not provided, by default, both <code>getMarketIndex()</code> and <code>getTicker()</code> functions download stock prices from 01.01.2019 to 12.08.2020.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>asset_group &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;UZ704532K019&quot;</span>, <span class="st">&quot;UZ7045320007&quot;</span>, <span class="st">&quot;UZ7025870005&quot;</span>, <span class="st">&quot;UZ7038380000&quot;</span>, <span class="st">&quot;UZ7025770007&quot;</span>,</span>
 <span id="cb15-2"><a href="#cb15-2"></a>                 <span class="st">&quot;UZ7015030008&quot;</span>, <span class="st">&quot;UZ7043200003&quot;</span>, <span class="st">&quot;UZ703756K015&quot;</span>, <span class="st">&quot;UZ7037560008&quot;</span>, <span class="st">&quot;UZ7016400002&quot;</span>,</span>
 <span id="cb15-3"><a href="#cb15-3"></a>                 <span class="st">&quot;UZ7004510002&quot;</span>, <span class="st">&quot;UZ7023760000&quot;</span>, <span class="st">&quot;UZ703348K011&quot;</span>, <span class="st">&quot;UZ7033480003&quot;</span>, <span class="st">&quot;UZ7035340007&quot;</span>,</span>
 <span id="cb15-4"><a href="#cb15-4"></a>                 <span class="st">&quot;UZ7028090007&quot;</span>, <span class="st">&quot;UZ701134K017&quot;</span>, <span class="st">&quot;UZ7011340005&quot;</span>, <span class="st">&quot;UZ701655K011&quot;</span>, <span class="st">&quot;UZ7016550004&quot;</span>)</span>
 <span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a>assets &lt;-<span class="st"> </span>asset_group <span class="op">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="st">  </span><span class="kw">lapply</span>(getTicker, <span class="dt">from =</span> <span class="st">&quot;01.01.2019&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;12.08.2020&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="st">  </span><span class="kw">bind_rows</span>()</span></code></pre></div>
-<p>Having loaded stock prices, we calculate monthly returns using a <code>tidyquant::tq_transmute()</code> function from <code>tidyquant</code> package. Please refer to the <a href="https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html">link</a> for more information on using <code>tidyquant</code> package.</p>
+<span id="cb15-6"><a href="#cb15-6"></a>assets &lt;-<span class="st"> </span>asset_group <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">getTicker</span>(<span class="dt">from =</span> <span class="st">&quot;01.01.2019&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;12.08.2020&quot;</span>)</span></code></pre></div>
+<p>Having loaded stock prices, we calculate monthly returns using a <code>tidyquant::tq_transmute()</code> function from <code>tidyquant</code> package. Please refer to the <a href="https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html">Tidyquant vignette</a> for information on using <code>tidyquant</code> package.</p>
 <p>As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating <a href="https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html">adjusted closing prices</a>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Ra &lt;-<span class="st"> </span>assets <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">group_by</span>(symbol) <span class="op">%&gt;%</span></span>

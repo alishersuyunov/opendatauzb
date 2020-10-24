@@ -21,7 +21,7 @@ Version (0.1.1) introduces several new functions for collecting Uzbek Stock Mark
 
 <br>
 
-Please refer to [vignette documentation](https://rawcdn.githack.com/alishersuyunov/opendatauzb/ce29711e66deeb9852b14b808bdf722c63c94c61/vignettes/opendatauzb.html) for additional examples:<br>
+Please refer to [vignette documentation](https://rawcdn.githack.com/alishersuyunov/opendatauzb/ce29711e66deeb9852b14b808bdf722c63c94c61/doc/opendatauzb.html) for additional examples:<br>
 
 `browseVignettes("opendatauzb")`<br>
 `vignette("opendatauzb", package = "opendatauzb")`
