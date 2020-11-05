@@ -74,11 +74,11 @@ get_FX <- function(currency = c("USD", "EUR"), from = "01-10-2020", to = "dd-mm-
       return()
   })
 
-  df <- full %>% data.table::rbindlist() %>% filter(`Exchange Tool ID` != "")
+  df <- full %>% data.table::rbindlist() %>% filter(across(.fns = ~ !is.na(.x)))
 
-  if(length(colnames(df)) == 4) {
-    df <- df %>% purrr::set_names(c("date", "exchange_tool", "exchange_rate", "total_amount_traded")) %>%
-      mutate(date = lubridate::ymd(date),
+  if(length(colnames(df)) == 5) {
+    df <- df %>% purrr::set_names(c("date", "time", "instrument", "exchange_rate", "total_amount_traded")) %>%
+      mutate(date = lubridate::dmy(date),
              total_amount_traded = stringr::str_replace_all(total_amount_traded, " ", "") %>% stringr::str_replace_all(",", ".") %>% as.double()) %>%
       arrange(date)
   }
