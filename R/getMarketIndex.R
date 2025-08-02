@@ -8,9 +8,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl dplyr lubridate tidyr jsonlite xml2 crayon
-#'
-#' @importFrom assertive assert_is_a_non_missing_nor_empty_string is_true are_intersecting_sets
+#' @import httr readxl dplyr lubridate tidyr jsonlite xml2 crayon checkmate
 #' @importFrom stringr str_trim str_to_lower str_to_sentence
 #' @importFrom glue glue
 #'
@@ -36,13 +34,16 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
     to <- today() %>% format(format = "%d.%m.%Y")
   }
 
-  assertive::assert_is_a_non_missing_nor_empty_string(sector)
+  checkmate::assert_string(sector, min.chars = 1)
 
   checkDateFormat(from)
   checkDateFormat(to)
 
-  assertive::are_intersecting_sets(stringr::str_to_lower(stringr::str_trim(sector)),
-                                   c("all", "finance", "industry", "agriculture", "construction", "social", "transport", "trade", "other"))
+  allowed <- c("all", "finance", "industry", "agriculture",
+               "construction", "social", "transport", "trade", "other")
+
+  sector_clean <- tolower(trimws(sector))
+  checkmate::assert_choice(sector_clean, choices = allowed)
 
   sector_code <- switch(stringr::str_to_lower(stringr::str_trim(sector)),
                         "all" = "001",
@@ -81,7 +82,11 @@ getMarketIndex <- function(sector = c("all", "finance", "industry", "agriculture
 }
 
 checkDateFormat <- function(dt) {
-  if(assertive::is_true(lubridate::guess_formats(dt, "d0my") == "%d.%Om.%Y" || lubridate::guess_formats(dt, "d0my") == "%d.%m.%Y")) {
-    return(TRUE)
-  } else stop("Please state 'from' (or 'to') date in %d.%m.%Y format (e.g. '22.12.2020')")
+  parsed <- lubridate::dmy(dt, quiet = TRUE)
+  if (is.na(parsed)) {
+    stop("Please state 'from' (or 'to') date in %d.%m.%Y format (e.g. '22.12.2020').")
+  }
+
+  invisible(TRUE)
 }
+

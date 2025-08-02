@@ -8,10 +8,9 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr readxl rvest dplyr lubridate tidyr jsonlite crayon
+#' @import httr readxl rvest dplyr lubridate tidyr jsonlite crayon checkmate
 #'
 #' @importFrom glue glue
-#' @importFrom assertive assert_is_a_non_missing_nor_empty_string
 #' @importFrom stringr str_trim str_length
 #'
 #' @return Returns a data frame
@@ -34,7 +33,7 @@ getTicker <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
 
 getTicker_core <- function(symbol, from = "01.01.2020", to = "dd.mm.yyyy") {
 
-  assertive::assert_is_a_non_missing_nor_empty_string(symbol)
+  checkmate::assert_string(symbol, min.chars = 1)
 
   symbol <- stringr::str_trim(symbol)
   from <- stringr::str_trim(from)

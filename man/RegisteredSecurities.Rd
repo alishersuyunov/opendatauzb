@@ -10,7 +10,7 @@ RegisteredSecurities()
 Returns a data frame
 }
 \description{
-Returns a data frame with the list of securities from the Central Securities Depository (\url{www.deponet.uz}) database
+Returns a data frame with the list of securities from the Central Securities Depository (\url{uzcsd.uz}) database
 }
 \examples{
  \dontrun{

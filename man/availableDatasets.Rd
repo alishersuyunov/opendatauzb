@@ -6,7 +6,7 @@
 \alias{availableDataSources}
 \title{Available Datasets}
 \usage{
-availableDatasets()
+availableDatasets(pagelimit = 1e+06)
 
 availableDatasets_by_source(id)
 
@@ -23,11 +23,11 @@ Obtains the list of available datasets from the \url{data.gov.uz}
 }
 \section{Functions}{
 \itemize{
-\item \code{availableDatasets_by_source}: Obtains the list of available datasets published by particular organisation/authority
+\item \code{availableDatasets_by_source()}: Obtains the list of available datasets published by particular organisation/authority
 
-\item \code{availableDataSources}: Obtains the list of available datasources - organisations
+\item \code{availableDataSources()}: Obtains the list of available datasources - organisations
+
 }}
-
 \examples{
 \dontrun{
  availableDatasets()

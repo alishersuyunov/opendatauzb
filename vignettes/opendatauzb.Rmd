@@ -25,71 +25,76 @@ library(formattable)
 
 This vignette provides an overview of a practical use of **opendatauzb** package's functions to work with Uzbek Stock Market Data. Unlike stock markets in developed economies, there are few resources available in Uzbekistan that are machine-friendly and able to provide Uzbek stock market prices in machine-readable formats. With this R package, we overcome these data limitations and improve productivity of equity research analysts while evaluating Uzbek stocks.
 
-
 # Available securities in Uzbek Stock Market
 
 ## RegisteredSecurities(): Download a full list of registered securities with ISIN and CFI codes
 
-```opendatauzb::RegisteredSecurities()``` collects a list of securities from the [Central Securities Depository](www.deponet.uz) database.
+`opendatauzb::RegisteredSecurities()` collects a list of securities from the [Central Securities Depository](uzcsd.uz) database.
 
 ```{r, include = TRUE, eval=FALSE, warning=FALSE}
 RegisteredSecurities()
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
-RegisteredSecurities() %>% head(10) %>% kable()
+RegisteredSecurities() %>% head(10) %>% kable() %>% kable_styling()
 ```
 
 ## getSecurities(): Download the securities listed on the Republican Stock Exchange "Toshkent"
 
-```opendatauzb::getSecurities()``` provides a data frame with the list of securities from [the Republican Stock Exchange "Toshkent" database](www.uzse.uz)
+`opendatauzb::getSecurities()` provides a data frame with the list of securities from [the Republican Stock Exchange "Toshkent" database](www.uzse.uz)
 
 ```{r, include = TRUE, warning=FALSE, eval=FALSE}
 getSecurities()
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
 getSecurities() %>% head(10) %>% kable() %>% kable_styling()
 ```
 
 ## ipo(): Obtain schedule of public offerings (IPO/SPO/PO (the government shares))
 
-```opendatauzb::ipo()``` returns a data frame with public offerings in last five years.
+`opendatauzb::ipo()` returns a data frame with public offerings in last five years.
 
 ```{r, include = TRUE, eval = FALSE, warning = FALSE}
 ipo()
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning = FALSE}
 ipo() %>% tail(10) %>% kable() %>% kable_styling()
 ```
 
 ## currentBidsAsks(): Watch current Bids and Asks for stocks
 
-```opendatauzb::currentBidsAsks()``` returns current bid and ask prices on [the Republican Stock Exchange "Toshkent" database](www.uzse.uz).
+`opendatauzb::currentBidsAsks()` returns current bid and ask prices on [the Republican Stock Exchange "Toshkent" database](www.uzse.uz).
 
 ```{r, include = TRUE, eval = FALSE, warning = FALSE}
 currentBidsAsks()
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning = FALSE,}
 currentBidsAsks() %>% head(10) %>% select(-5) %>% kable(results = "asis") %>% kable_styling() 
 ```
 
 ## Market Benchmark
+
 ### getMarketIndex(): Download stock market indices over the period given across sectors
 
-```opendatauzb::getMarketIndex()``` downloads Uzbek stock market indices (Uzbekistan Composite Index, UCI) by sectors or all sectors. The sector name should be provided as the following (case-insensitive):
+`opendatauzb::getMarketIndex()` downloads Uzbek stock market indices (Uzbekistan Composite Index, UCI) by sectors or all sectors. The sector name should be provided as the following (case-insensitive):
 
- * all
- * finance
- * industry 
- * agriculture
- * construction 
- * social 
- * transport
- * trade 
- * other
+-   all
+-   finance
+-   industry
+-   agriculture
+-   construction
+-   social
+-   transport
+-   trade
+-   other
 
 ```{r, include = TRUE, eval=FALSE, warning=FALSE}
 getMarketIndex(sector = "all")
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
 getMarketIndex(sector = "all") %>% head(10) %>% kable() %>% kable_styling()
 ```
@@ -98,22 +103,24 @@ The timeframe can be specified by arguments *from* and *to* provided in **"%d.%m
 
 ```{r, include = TRUE, eval=FALSE, warning=FALSE}
 getMarketIndex(sector = "finance",
-               from = "01.01.2018",
-               to = "30.06.2020")
+               from = "01.01.2019",
+               to = "30.06.2025")
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
 getMarketIndex(sector = "finance",
-               from = "01.01.2018",
-               to = "30.06.2020") %>% head(10) %>% kable() %>% kable_styling()
+               from = "01.01.2022",
+               to = "30.06.2025") %>% head(10) %>% kable() %>% kable_styling()
 ```
 
 ## getTicker(): Load stock market prices for certain timeframe
 
-```opendatauzb::getTicker()``` obtains stock market prices by security code over the period given:
+`opendatauzb::getTicker()` obtains stock market prices by security code over the period given:
 
 ```{r, include = TRUE, eval=FALSE, warning=FALSE}
 getTicker("UZ7011340005")
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
 getTicker("UZ7011340005") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable_styling()
 ```
@@ -123,34 +130,34 @@ getTicker("UZ7011340005",
           from = "01.01.2018", 
           to = "30.06.2020")
 ```
+
 ```{r, echo = FALSE, include = TRUE, warning=FALSE, message = FALSE}
 getTicker("UZ7011340005", 
-          from = "01.01.2018", 
-          to = "30.06.2020") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable_styling()
+          from = "01.01.2022",
+          to = "30.06.2025") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable_styling()
 ```
-
-
 
 # Constructing a portfolio with Uzbek Stocks
 
 ## Creating a data frame with stock prices
 
-For this example, we use **opendatauzb** package's functions and other packages (```quantmod```, ```PerformanceAnalytics```, ```tidyquant```) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including **Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino** and others.
+For this example, we use **opendatauzb** package's functions and other packages (`quantmod`, `PerformanceAnalytics`, `tidyquant`) for financial modelling to evaluate the given set of stocks and portfolio performance. we have chosen 20 stocks, including **Kvarts, Trustbank, Hamkorbank, UzSQB, ToshkentVino** and others.
 
-Using ```getTicker``` function, we download stock prices for each of those stocks. **Note**: if arguments *from* and *to* are not provided, by default, both ```getMarketIndex()``` and ```getTicker()``` functions download stock prices from 01.01.2019 to 12.08.2020.
+Using `getTicker` function, we download stock prices for each of those stocks. **Note**: if arguments *from* and *to* are not provided, by default, both `getMarketIndex()` and `getTicker()` functions download stock prices from 01.01.2019 to 12.08.2020.
 
 ```{r, include = TRUE, warning=FALSE, message=FALSE}
 asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000", "UZ7025770007",
                  "UZ7015030008", "UZ7043200003", "UZ703756K015", "UZ7037560008", "UZ7016400002",
-                 "UZ7004510002", "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
-                 "UZ7028090007", "UZ701134K017", "UZ7011340005", "UZ701655K011", "UZ7016550004")
+                 "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
+                 "UZ7028090007", "UZ701655K011", "UZ7016550004"
+                 )
 
 assets <- asset_group %>% getTicker(from = "01.01.2019", to = "12.08.2020")
 ```
 
-Having loaded stock prices, we calculate monthly returns using a ```tidyquant::tq_transmute()``` function from ```tidyquant``` package. Please refer to the [Tidyquant vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html) for information on using ```tidyquant``` package.
+Having loaded stock prices, we calculate monthly returns using a `tidyquant::tq_transmute()` function from `tidyquant` package. Please refer to the [Tidyquant vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html) for information on using `tidyquant` package.
 
-As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating [adjusted closing prices](https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html). 
+As Uzbek Stock Market databases do not provide adjusted closing prices, for this example, we use closing prices. However, in real-world practice, we highly recommend calculating [adjusted closing prices](https://finance.zacks.com/adjusted-closing-price-vs-closing-price-9991.html).
 
 ```{r, include = TRUE, warning=FALSE}
 Ra <- assets %>% 
@@ -188,7 +195,7 @@ RaRb <- left_join(Ra, Rb, by = c("Date" = "date"))
 
 ## Building the Capital Asset Pricing Model (CAPM)
 
-To evaluate if the stock is valued fairly considering associated risks and expected returns, we employ [CAPM](https://corporatefinanceinstitute.com/resources/knowledge/finance/what-is-capm-formula/) model. We use ```tidyquant::tq_performance()``` function from ```tidyquant``` package.
+To evaluate if the stock is valued fairly considering associated risks and expected returns, we employ [CAPM](https://corporatefinanceinstitute.com/resources/knowledge/finance/what-is-capm-formula/) model. We use `tidyquant::tq_performance()` function from `tidyquant` package.
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
 RaRb_capm <- RaRb %>%
@@ -205,7 +212,7 @@ RaRb_capm %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-## Calculating Sharpe ratio for individual stocks 
+## Calculating Sharpe ratio for individual stocks
 
 We estimate Sharpe ratio for all our stocks to see returns on investment per amount of taken risks. As a rule of thumb, the Sharpe ratio greater than 3 is classified as **Excellent**, an interval 2.00-2.99 is **Very Good**, 1.00-1.99 range is **Acceptable**, the ratio less than 1 is classified as **Bad or Sub-optimal**.
 
@@ -221,7 +228,6 @@ RaRb %>%
                                                                                  font.weight = "bold"), 
                                                                            NA))))
 ```
-
 
 ## (Single) Portfolio performance
 
@@ -251,7 +257,7 @@ left_join(portfolio_returns_monthly,
 
 ## Portfolio growth
 
-On condition that our initial assumptions hold, let us see how 100,000 UZS investment in these stocks would grow since 1 January 2019. 
+On condition that our initial assumptions hold, let us see how 100,000 UZS investment in these stocks would grow since 1 January 2019.
 
 ```{r , warning=FALSE, message=FALSE}
 portfolio_growth_monthly <- Ra %>%
@@ -266,7 +272,6 @@ portfolio_growth_monthly <- Ra %>%
 As the graph below shows, the initial investment of 100,000 UZS in these 2 stocks in 1 January 2019 is worth around 2.2M UZS as of 30 June 2020 without inflation adjustment.
 
 **Note:** These estimates are for only illustrative purposes of the practical use of *opendatauzb* package. The real returns on investment may rely heavily on the assumptions drawn earlier and other exogenous shocks to Uzbek Stock Market.
-
 
 ```{r echo=FALSE, fig.height=5, fig.width=7, message=FALSE, , warning=FALSE}
 portfolio_growth_monthly %>%
