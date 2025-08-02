@@ -12,13 +12,13 @@ test_that("Multiple Stock Data", {
 })
 
 test_that("Multiple Stock Data (symbol) - Character vector", {
-  testthat::expect_identical(getTicker(c("KVTS", "UZTL"), from = "01.01.2019", to = "01.02.2019")["symbol"] %>% unique(),
-                             tibble(symbol = c("UZ7025770007", "UZ7047110000")))
+  testthat::expect_identical(getTicker(c("KVTS", "MSBU"), from = "01.01.2019", to = "01.02.2019")["symbol"] %>% unique(),
+                             tibble(symbol = c("UZ7025770007", "UZ7015030008")))
 })
 
 test_that("Multiple Stock Data (symbol) - List", {
-  testthat::expect_identical(getTicker(list("KVTS", "UZTL"), from = "01.01.2019", to = "01.02.2019")["symbol"] %>% unique(),
-                             tibble(symbol = c("UZ7025770007", "UZ7047110000")))
+  testthat::expect_identical(getTicker(list("KVTS", "MSBU"), from = "01.01.2019", to = "01.02.2019")["symbol"] %>% unique(),
+                             tibble(symbol = c("UZ7025770007", "UZ7015030008")))
 })
 
 test_that("Stock Data Structure", {

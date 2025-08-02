@@ -4,7 +4,7 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr dplyr tidyr crayon checkmate
+#' @import httr dplyr tidyr crayon
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom glue glue
@@ -45,15 +45,15 @@ requestNames <- function(security_code) {
 }
 
 requestTicker <- function(security_code, type = "STK") {
-  checkmate::assert_string(security_code, min.chars = 1)
-  checkmate::assert_string(type,          min.chars = 1)
+  assertive::assert_is_a_non_empty_string(security_code)
+  assertive::assert_is_a_non_empty_string(type)
 
   requestNames(type) %>% filter(V1 == security_code) %>% .[2] %>% as.character() %>% return()
 }
 
 requestSecurityCode <- function(ticker, type = "STK") {
-  checkmate::assert_string(ticker, min.chars = 1)
-  checkmate::assert_string(type,   min.chars = 1)
+  assertive::assert_is_a_non_empty_string(ticker)
+  assertive::assert_is_a_non_empty_string(type)
 
   requestNames(type) %>% filter(V2 == toupper(ticker)) %>% .[1] %>% as.character() %>% return()
 }

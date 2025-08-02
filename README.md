@@ -1,9 +1,10 @@
-# opendatauzb 0.1.4
+# opendatauzb 0.1.3
+
+[![Travis build status](https://travis-ci.com/alishersuyunov/opendatauzb.svg?branch=master)](https://travis-ci.com/alishersuyunov/opendatauzb)
 
 Downloading available datasets and Uzbek Stock Market data from official open data sources of Uzbekistan 
 
 ## RELEASE NOTES:
-- Version 0.1.4 updates the underlying API calls and improves performance of the package; it adds two more functions `getAllIssuers` and `getDividends`
 - Version 0.1.3 offers support of a vector/list of multiple securities in `getTicker()` function; now, `getTicker` accepts both security code ("UZ7048610008") and ticker ("RBQB") to download stock prices.
 - Version 0.1.2 improves performance, optimises dependencies; output data frames are sorted by design
 - Version 0.1.1 introduces several new functions to download Uzbek Stock Market data along with a vignette documentation
@@ -16,7 +17,7 @@ Version (0.1.1) introduces several new functions for collecting Uzbek Stock Mark
 * `currentBidsAsks()`: returns current bid and ask prices on the Republican Stock Exchange "Toshkent"
 * `ipo()`: returns a data frame with public offerings in last five years
 * `getSecurities()`: returns a data frame with the list of securities from [the Republican Stock Exchange "Toshkent" database](http://www.uzse.uz)
-* `RegisteredSecurities()`: returns a data frame with the list of securities from [the Central Securities Depository](http://www.uzcsd.uz) database
+* `RegisteredSecurities()`: returns a data frame with the list of securities from [the Central Securities Depository](http://www.deponet.uz) database
 
 <br>
 

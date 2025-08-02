@@ -1,10 +1,12 @@
 #'  Downloads a full list of registered securities with ISIN and CFI codes
 #'
-#'  Returns a data frame with the list of securities from the Central Securities Depository (\url{uzcsd.uz}) database
+#'  Returns a data frame with the list of securities from the Central Securities Depository (\url{www.deponet.uz}) database
 #'
 #' @author Alisher Suyunov
 #'
-#' @import dplyr tidyr httr jsonlite
+#' @import dplyr tidyr
+#' @importFrom xml2 read_html
+#' @importFrom rvest xml_nodes html_table
 #'
 #' @return Returns a data frame
 #' @export
@@ -12,16 +14,13 @@
 #' @examples
 #'  \dontrun{
 #'  RegisteredSecurities()}
-RegisteredSecurities <- function() {
-  url <- "https://web.uzcsd.uz/api/Security/GetAllSecurity"
-
-  # Fetch & parse JSON, with error handling
-  data <- tryCatch(
-    jsonlite::fromJSON(url, simplifyDataFrame = TRUE),
-    error = function(e) {
-      stop("Failed to fetch or parse UZCSD securities JSON: ", e$message)
-    }
-  )
-
-  return(data)
+RegisteredSecurities <- function(){
+  xml2::read_html("http://www.deponet.uz/cgi-bin/asb_all.cgi") %>%
+    rvest::xml_nodes("table") %>%
+    .[7] %>%
+    rvest::html_table() %>%
+    .[[1]] %>%
+    `colnames<-`(c("Issuer", "SecurityCode", "ISIN", "CFI", "last_update")) %>%
+    mutate(last_update = as.Date(last_update, format = "%d-%m-%Y")) %>%
+    return()
 }

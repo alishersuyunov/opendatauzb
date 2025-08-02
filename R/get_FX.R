@@ -8,9 +8,12 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import httr rvest dplyr checkmate lubridate stringr
+#' @import httr rvest dplyr
 #'
 #' @importFrom glue glue
+#' @importFrom assertive is_empty
+#' @importFrom assertive is_true
+#' @importFrom assertive assert_is_a_non_missing_nor_empty_string
 #' @importFrom purrr map
 #' @importFrom purrr set_names
 #' @importFrom data.table rbindlist
@@ -32,8 +35,8 @@
 #'  \dontrun{
 #'  get_FX("USD")
 #'  get_FX("EUR", from = "01-01-2018", to = "12-10-2020")}
-get_FX <- function(currency = c("USD", "EUR"), from = "01-01-2022", to = "dd-mm-YYYY") {
-  checkmate::assert_string(currency, min.chars = 1)
+get_FX <- function(currency = c("USD", "EUR"), from = "01-10-2020", to = "dd-mm-YYYY") {
+  assertive::assert_is_a_non_missing_nor_empty_string(currency)
   currency <- toupper(currency)
 
   if (to == "dd-mm-YYYY") to <- format(lubridate::today() + lubridate::days(1), "%d-%m-%Y")
@@ -42,49 +45,53 @@ get_FX <- function(currency = c("USD", "EUR"), from = "01-01-2022", to = "dd-mm-
   checkDateFormat_UZRCE(to)
 
   type <- 1
-  exchange_tool_id <- switch(currency, "USD" = 7, "EUR" = 6, "")
+  exchange_tool_id <- switch(currency, "USD" = 1, "EUR" = 6, "")
   created_at <- from #%>% anytime::anydate() %>% format("%d-%m-%Y")
   end_date <- to #%>% anytime::anydate() %>% format("%d-%m-%Y")
 
   crayon::green(paste("Downloading", currency, "exchange rates (UzRCE) from", from, "to", to)) %>% message()
 
-  req <- GET("https://uzrvb.uz/rynki-i-torgi/arhiv-kursov",
-             add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
-             "referrer" = "https://uzrvb.uz/rynki-i-torgi/arhiv-kursov"))
 
-  tbl <- content(req, as = "text", encoding = "UTF-8") %>%
-    read_html() %>%
-    html_element("table.table-exel") %>%
-    html_table(fill = TRUE)
 
-  # clean & rename
-  df <- tbl[-1, ]
-  # rename without purrr::set_names()
-  names(df) <- c("date", "currency", "exchange_rate", "total_volume")
+  req <- glue::glue("http://uzrvb.uz/en/category/arhiv-kursov?",
+                    "ExchangeVolatilitySearch%5Btype%5D={type}&",
+                    "ExchangeVolatilitySearch%5Bexchange_tool_id%5D={exchange_tool_id}&",
+                    "ExchangeVolatilitySearch%5Bcreated_at%5D={created_at}&",
+                    "ExchangeVolatilitySearch%5Bend_date%5D={end_date}") %>%
+    GET(add_headers("User-Agent" = "Mozilla/5.0 (compatible; opendatauzbBot)",
+                    "referrer" = "http://uzrvb.uz/ru/category/arhiv-kursov"))
 
-  df <- df %>%
-    mutate(
-      date          = dmy(date),
-      currency      = toupper(currency),
-      exchange_rate = as.numeric(str_replace_all(exchange_rate, "[\\s]", "") %>%
-                                   str_replace_all(",", ".")),
-      total_volume  = as.numeric(str_replace_all(total_volume, "[\\s]", "") %>%
-                                   str_replace_all(",", "."))
-    ) %>%
-    arrange(date)
+  pages <- content(req) %>% xml_node(css = "#w1 > ul > li.last") %>% xml_contents() %>% xml_attr("data-page") %>% as.numeric() + 1
+
+  if (assertive::is_empty(pages)) pages <- 1
+
+  full <- purrr::map(1:pages, function(page_id) {
+    GET(req$url, query = list(page = page_id)) %>%
+      content() %>%
+      html_nodes(css = ".result_table") %>%
+      html_table(fill = TRUE) %>%
+      .[[1]] %>%
+      return()
+  })
+
+  df <- full %>% data.table::rbindlist() %>% filter(across(.fns = ~ !is.na(.x)))
+
+  if(length(colnames(df)) == 5) {
+    df <- df %>% purrr::set_names(c("date", "time", "instrument", "exchange_rate", "total_amount_traded")) %>%
+      mutate(date = lubridate::dmy(date),
+             total_amount_traded = stringr::str_replace_all(total_amount_traded, " ", "") %>% stringr::str_replace_all(",", ".") %>% as.double()) %>%
+      arrange(date)
+  }
 
   return(df)
 }
 
 checkDateFormat_UZRCE <- function(dt) {
-  # Try day-month-year and year-month-day
-  parsed_dmy <- lubridate::dmy(dt, quiet = TRUE)
-
-  if (is.na(parsed_dmy)) {
-    stop(
-      "Please express 'from' (or 'to') date in dd-mm-YYYY (e.g. '22-12-2020') format."
-    )
+  if (assertive::is_true(lubridate::guess_formats(dt, "d0my") == "%d-%Om-%Y" || lubridate::guess_formats(dt, "d0my") == "%d-%m-%Y"
+                         || lubridate::guess_formats(dt, "d0my") == "%d-%Om-%Y" || lubridate::guess_formats(dt, "d0my") == "%d-%m-%Y"
+                         || lubridate::guess_formats(dt, "y0md") == "%Y-%Om-%d" || lubridate::guess_formats(dt, "y0md") == "%Y-%m-%d"
+                         )) {
+    return(TRUE)
   }
-
-  return(TRUE)
+  else stop("Please express 'from' (or 'to') date in %d-%m-%Y format (e.g. '22-12-2020') or %Y-%m-%d format (e.g. '2020-12-20')")
 }

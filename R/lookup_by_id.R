@@ -6,7 +6,9 @@
 #'
 #' @author Alisher Suyunov
 #'
-#' @import dplyr httr checkmate
+#' @import dplyr httr
+#'
+#' @importFrom assertive assert_any_are_numeric_strings
 #' @importFrom jsonlite fromJSON
 #'
 #' @return Returns a character
@@ -18,15 +20,7 @@
 
 lookup_by_id <- function(id){
   id <- as.character(id)
-  checkmate::assert_character(id_char, any.missing = FALSE)
-
-  # 2) ensure at least one element is digits-only
-  checkmate::assert_true(
-    any(grepl("^[0-9]+$", id_char)),
-    .var.name = "id",
-    .var.info = "at least one element must consist only of digits"
-  )
-
+  assertive::assert_any_are_numeric_strings(as.character(id), severity = "stop")
   formRequest(paste0("dataset/", id)) %>%
     GET() %>%
     content("text") %>%
