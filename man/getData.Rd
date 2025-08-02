@@ -29,11 +29,11 @@ Downloads available datasets and related information from data.gov.uz API
 }
 \section{Functions}{
 \itemize{
-\item \code{getData_dictionary}: Downloads a dataset dictionary (variables) for the datasets
+\item \code{getData_dictionary()}: Downloads a dataset dictionary (variables) for the datasets
 
-\item \code{getData_history}: Obtains a data frame with dataset history containing publication date and version
+\item \code{getData_history()}: Obtains a data frame with dataset history containing publication date and version
+
 }}
-
 \examples{
  \dontrun{
  getData(7)

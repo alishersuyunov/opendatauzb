@@ -1,7 +1,7 @@
 Package: opendatauzb
 Type: Package
 Title: Downloading available datasets and Uzbek Stock Market Data from an official open data source of Uzbekistan 
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: person("Alisher", "Suyunov", email = "alisher.c@yandex.com",
                   role = c("aut", "cre"))
 Description: Import data from an official open data source of Uzbekistan - \url{data.gov.uz} - and Uzbek Stock Market Data from \url{uzse.uz}
@@ -9,7 +9,7 @@ Description: Import data from an official open data source of Uzbekistan - \url{
 License: GPL-3
 Encoding: UTF-8
 Imports:
-    assertive,
+    checkmate,
     crayon,
     data.table,
     dplyr,
@@ -39,4 +39,4 @@ VignetteBuilder: knitr
 URL: https://github.com/alishersuyunov/opendatauzb
 BugReports: https://github.com/alishersuyunov/opendatauzb/issues
 LazyData: false
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2

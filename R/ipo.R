@@ -10,7 +10,7 @@
 #' @import httr readxl dplyr lubridate tidyr jsonlite
 #'
 #' @importFrom glue glue
-#' @importFrom assertive assert_is_a_number
+#' @importFrom checkmate assert_number
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_table
 #' @importFrom stringr str_trim str_replace_all
@@ -24,14 +24,14 @@
 #'  ipo(plus_n_years = 2)}
 ipo <- function(key = "", plus_n_years = 1) {
 
-  assertive::assert_is_a_number(plus_n_years)
+  checkmate::assert_number(plus_n_years)
   key <- as.character(key)
 
   glue::glue('https://uzse.uz/ipos?search_key={key}&search_date={as.character(format(today() + years(plus_n_years), "%d.%m.%Y"))}') %>%
     xml2::read_html() %>%
-    rvest::html_table() %>%
+    rvest::html_table()  %>%
     .[[1]] %>%
-    select(-"", Code = 2) %>%
+    select(-1, Code = 2) %>%
     separate(Code, c("Code", "Title"), sep = "\n") %>%
     mutate(Code = stringr::str_replace_all(Code, "[[:punct:]]", " "), Title = stringr::str_trim(Title)) %>%
     return()
