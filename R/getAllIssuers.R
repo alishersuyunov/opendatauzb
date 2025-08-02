@@ -1,19 +1,19 @@
-#'  Downloads a full list of registered securities with ISIN and CFI codes
+#'  Downloads a full list of issuers
 #'
-#'  Returns a data frame with the list of securities from the Central Securities Depository (\url{uzcsd.uz}) database
+#'  Returns a data frame with the list of issuers from the Central Securities Depository (\url{uzcsd.uz}) database
 #'
 #' @author Alisher Suyunov
 #'
 #' @import dplyr tidyr httr jsonlite
 #'
-#' @return Returns a data frame
+#' @return Returns a data frame with the list of issuers
 #' @export
 #'
 #' @examples
 #'  \dontrun{
-#'  RegisteredSecurities()}
-RegisteredSecurities <- function() {
-  url <- "https://web.uzcsd.uz/api/Security/GetAllSecurity"
+#'  getAllIssuers()}
+getAllIssuers <- function() {
+  url <- "https://web.uzcsd.uz/api/Security/GetAllIssuersInformation"
 
   # Fetch & parse JSON, with error handling
   data <- tryCatch(

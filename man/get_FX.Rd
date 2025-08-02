@@ -4,7 +4,7 @@
 \alias{get_FX}
 \title{Downloading Foreign Currency Exchange Data}
 \usage{
-get_FX(currency = c("USD", "EUR"), from = "01-10-2020", to = "dd-mm-YYYY")
+get_FX(currency = c("USD", "EUR"), from = "01-01-2022", to = "dd-mm-YYYY")
 }
 \arguments{
 \item{currency}{A currency code according to ISO 4217 (e.g. USD or EUR)}
