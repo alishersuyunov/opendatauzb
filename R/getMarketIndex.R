@@ -90,3 +90,12 @@ checkDateFormat <- function(dt) {
   invisible(TRUE)
 }
 
+checkDateFormat_ymd <- function(dt) {
+  parsed <- lubridate::ymd(dt, quiet = TRUE)
+  if (is.na(parsed)) {
+    stop("Please state 'from' (or 'to') date in %d.%m.%Y format (e.g. '2020-01-01').")
+  }
+
+  invisible(TRUE)
+}
+

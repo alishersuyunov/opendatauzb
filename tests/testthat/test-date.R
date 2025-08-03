@@ -18,8 +18,8 @@ test_that("Returned objects are correct", {
                                     from = "01.06.2020",
                                     to = "30.06.2020"), "data.frame")
   expect_s3_class(getTicker("UZ7011340005",
-                               from = "01.06.2020",
-                               to = "30.06.2020"), "data.frame")
+                               from = "2020-06-01",
+                               to = "2020-06-30"), "data.frame")
 
   expect_s3_class(currentBidsAsks(), "data.frame")
   expect_s3_class(ipo(), "data.frame")
