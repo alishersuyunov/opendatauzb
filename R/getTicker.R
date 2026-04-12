@@ -27,7 +27,7 @@ getTicker <- function(symbol, from = "2020-01-01", to = "yyyy-mm-dd") {
   if(is.character(symbol) && (length(symbol) == 1)) {
     getTicker_core(symbol, from, to) %>% return()
   } else {
-    lapply(symbol, getTicker_core, from, to) %>% bind_rows() %>% return()
+    lapply(symbol, getTicker_core, from, to) %>% data.table::rbindlist() %>% return()
   }
 }
 

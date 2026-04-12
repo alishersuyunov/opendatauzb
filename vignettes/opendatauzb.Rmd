@@ -127,14 +127,14 @@ getTicker("UZ7011340005") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable
 
 ```{r, include = TRUE, eval=FALSE, warning=FALSE}
 getTicker("UZ7011340005", 
-          from = "01.01.2018", 
-          to = "30.06.2020")
+          from = "2018-01-01", 
+          to = "2020-06-20")
 ```
 
 ```{r, echo = FALSE, include = TRUE, warning=FALSE, message = FALSE}
 getTicker("UZ7011340005", 
-          from = "01.01.2022",
-          to = "30.06.2025") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable_styling()
+          from = "2018-01-01", 
+          to = "2020-06-20") %>% head(10) %>% select(-9, -10) %>% kable() %>% kable_styling()
 ```
 
 # Constructing a portfolio with Uzbek Stocks
@@ -146,13 +146,14 @@ For this example, we use **opendatauzb** package's functions and other packages 
 Using `getTicker` function, we download stock prices for each of those stocks. **Note**: if arguments *from* and *to* are not provided, by default, both `getMarketIndex()` and `getTicker()` functions download stock prices from 01.01.2019 to 12.08.2020.
 
 ```{r, include = TRUE, warning=FALSE, message=FALSE}
-asset_group <- c("UZ704532K019", "UZ7045320007", "UZ7025870005", "UZ7038380000", "UZ7025770007",
-                 "UZ7015030008", "UZ7043200003", "UZ703756K015", "UZ7037560008", "UZ7016400002",
-                 "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
-                 "UZ7028090007", "UZ701655K011", "UZ7016550004"
+asset_group <- c("UZ704532K019", "UZ7025870005", "UZ7038380000", "UZ7025770007",
+                 "UZ7015030008", "UZ7043200003", "UZ703756K015", "UZ7037560008", "UZ7023760000", "UZ703348K011", "UZ7033480003", "UZ7035340007",
+                 "UZ7028090007", "UZ701655K011"
                  )
 
-assets <- asset_group %>% getTicker(from = "01.01.2019", to = "12.08.2020")
+assets <- asset_group %>% getTicker(from = "2019-01-01", to = "2020-08-12")
+assets$`Trade date` <- as.Date(assets$`Trade date`, format = "%Y-%m-%d")
+colnames(assets) <- c("date", "symbol", "market", "board", "price", "quantity", "value")
 ```
 
 Having loaded stock prices, we calculate monthly returns using a `tidyquant::tq_transmute()` function from `tidyquant` package. Please refer to the [Tidyquant vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ05-performance-analysis-with-tidyquant.html) for information on using `tidyquant` package.
@@ -162,7 +163,7 @@ As Uzbek Stock Market databases do not provide adjusted closing prices, for this
 ```{r, include = TRUE, warning=FALSE}
 Ra <- assets %>% 
   group_by(symbol) %>%
-  tq_transmute(select     = "Closed Price",
+  tq_transmute(select     = "price",
                mutate_fun = periodReturn,
                period     = "monthly",
                col_rename = "Ra")
@@ -190,7 +191,7 @@ Rb <- getMarketIndex("all", from = "01.01.2019", to = "12.08.2020")  %>%
 
 ```{r, echo = FALSE, include = TRUE, warning=FALSE}
 Rb %>% head(6) %>% kable() %>% kable_styling()
-RaRb <- left_join(Ra, Rb, by = c("Date" = "date"))
+RaRb <- left_join(Ra, Rb, by = "date")
 ```
 
 ## Building the Capital Asset Pricing Model (CAPM)
